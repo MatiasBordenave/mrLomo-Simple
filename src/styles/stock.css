@@ -1,0 +1,19 @@
+.fondo{
+    background: url(../assets/mrLomo.png) no-repeat center top;
+    background-color: rgb(210, 154, 0);
+    text-align: center;
+    margin: auto;
+    margin-top: 5em;
+    
+}
+
+.tabla{
+    width: 70%;
+    text-align: center;
+    margin: auto;
+}
+
+h1{
+    border:3px red solid;
+    color: black;
+}

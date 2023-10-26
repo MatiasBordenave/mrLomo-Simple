@@ -1,0 +1,147 @@
+h2{
+    text-align: center;
+    border-radius: 10px;
+    border: 3px solid;
+    max-height: 1.4em;
+    min-height: 1.4em;
+}
+body{
+    background-color: rgb(210, 154, 0);
+    text-align: center;
+}
+.main{
+    background: url(../assets/mrLomo.png) no-repeat center;
+    height: 100%;
+}
+.glass{
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  border: solid 1px rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(1px);
+}
+.productos{
+    min-height: 23em;
+    height: 100%;
+}
+.divNavCategoria{
+    min-height: 23em;
+    height: 100%;
+}
+
+.glass2{
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 6px;
+    border: solid 1px rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+li{
+    display: flex;
+}
+.tarjeta{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(200px , 1fr));
+    gap: 32px
+}
+.liTitulo{
+    display: flex;
+    margin: 5px;
+}
+.liTitulo>div>button{
+    display: flex;
+    margin: 6px;
+}
+.liTitulo>p{
+    margin: 7px;
+}
+button{
+    border-radius: 9px;
+}
+.btnHandler{
+    width: 2em;
+    height: 2em;
+}
+
+.divBtns{
+    display: flex;
+}
+
+.divLados{
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+.btnEnd{
+    max-height: 5em;
+    min-height: 5em;
+    margin-top: auto;
+}
+.btnEnd input{
+    min-height: 2.5em;
+    max-height: 2.5em;
+}
+
+
+.inputProducto{
+    width: 2.1em;
+    height: 2.1em;
+}
+.divBtnProducto{
+    align-self: flex-end;
+}
+
+/*     -------------      */
+
+.unProducto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+  
+.button-volver {
+    align-self: flex-start;
+    margin: 10px;
+}
+   
+.liTituloProducto {
+    list-style: none;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+  
+.liTituloProducto h3 {
+    margin: 0;
+    padding: 0;
+}
+  
+.btnHandler, .inputProducto, .btnAgregar {
+    margin: 5px;
+}
+  
+.descripcion {
+    display: flex;
+    text-align: center;
+    align-self: flex-start;
+}
+.divMap{
+    flex: 1;
+    align-self: flex-start;
+    display: flex;
+    justify-content: space-between;
+}
+
+.divProductos{
+    margin-top: 5em;
+}

@@ -1,0 +1,82 @@
+.App {
+    text-align: center;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .card {
+    border:none;
+    border-radius: 8px;
+    background-color:#f5ca0a;
+    text-align:inherit;
+    font-size: 35px;
+    font-family:fantasy;
+    border-style:double;
+  
+  }
+  
+  .container {
+    max-width: 900px;
+    margin: 100px auto;
+    padding: 10px;
+    background-color: white;
+    outline: 2px solid black;
+    text-align: center;
+    background-position: 0cqmax;
+    border-style: double;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+  }
+  
+  body {
+    background-color: orange;
+  }
+  
+  .container2 {
+    background-color: white;
+    outline: 2px solid black;
+    display: grid;
+    max-width: 900px;
+    margin: 100px auto;
+    padding: 10px;
+    grid-template-columns: 16% 16% 16% 16% 16% 16%;
+    
+    
+  }
+  
+  
+  table{
+    width: 100%;
+  }
