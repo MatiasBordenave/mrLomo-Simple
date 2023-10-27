@@ -80,7 +80,6 @@ export function Ventas() {
 
             axios.delete(DETALLEVENTA_DELETE_ALL + numFactura)
             .then(()=>{
-                alert("Se Elimino los productos de la venta")
                 getProductoPorVenta()
             })
         }else(alert("No hay productos para realizar la venta"))
@@ -97,7 +96,6 @@ export function Ventas() {
                 montoTotal: total,
                 fechaYHora: fechaHoraSinMilisegundos
             }).then((resp) => {
-                (alert("venta realizada"))
                 getNumFactura()
                 setTotal(null)
                 }
@@ -122,7 +120,7 @@ export function Ventas() {
                 cantidad: contador,
                 subTotal: (contador*unProducto.precio)
     
-            }).then(()=>alert("Venta Agregada"))
+            })
             setIdProd(idProd + 1) 
             setMostrarComponente(true)
             getTotal()
@@ -147,7 +145,7 @@ export function Ventas() {
                 <nav className='col-lg-2'>
                     <div className='divNavCategoria glass2'>
                         <h5>Categorias</h5>
-                        <ul>
+                        <ul className='ulDeslizable2'>
                             { categoriasArray.length > 0 ?(
                                 <>
                                     <li><button onClick={() =>(setMostrarTodos(true), setMostrarComponente(true))}>Todos</button></li>
@@ -174,7 +172,7 @@ export function Ventas() {
                 <aside className='col-lg-4'>
                     <div className='glass2 divFactura'>
                         <h5>Numero de factura {numFactura}</h5>
-                        <ul className=''>
+                        <ul className='ulDeslizable2'>
                             {
                             
                                 productoPorVenta.map((producto)=>

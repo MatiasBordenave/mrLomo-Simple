@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import edit from '../../assets/edit.png'
 import '../../styles/producto.css';
 
 import { Categoria } from "../../constants/constants";
 
-import { CATEGORIA_GET, INGREDIENTES_GET, INGREDIENTES_GET_CRUZE, INGREDIENTES_POST, Nav, PRODUCTO_POST } from "../../constants/constants";
+import { CATEGORIA_GET, INGREDIENTES_GET, INGREDIENTES_GET_CRUZE, INGREDIENTES_POST, PRODUCTO_POST } from "../../constants/constants";
 import NavPrincipal from "../../componentes/NavPrincipal/NavPrincipal";
 
 export function Producto() {
+  
   const [productos, setProductos] = useState([]);
   //producto nuevo
   const [productoNuevo, setProductoNuevo] = useState();
   const [descripcion, setDescripcion] = useState();
   const [precio, setPrecio] = useState();
-
+  
   const [categorias, setCategorias] = useState([]);
   const [categoria, setCategoria] = useState([]);
   const [ingredientes, setIngredientes] = useState([])
   const [nombIngredientes, setNombIngredientes] = useState([])
   const [mostrarAgregarIng, setMostrarAgregarIng] = useState(true)
   const [mostrarAgregarProd, setMostrarAgregarProd] = useState(true)
+  const [mostrarEditarIng, setMostrarEditarIng] = useState(true)
+
 
 
 
@@ -60,7 +62,7 @@ export function Producto() {
   }
 
   const handleEditarIngrediente = () =>{
-    
+    setMostrarEditarIng(!mostrarEditarIng)
   }
 
   const resetItems = () =>{
@@ -109,7 +111,7 @@ export function Producto() {
                 mostrarAgregarProd ? (
                   <div className="divLados">
                     <h3>Productos</h3>
-                    <ul>
+                    <ul className="ulDeslizable">
                       {
                         productos.map((producto, index)=>{
                           return(
@@ -126,7 +128,7 @@ export function Producto() {
                   </div>
                 ) : (
                   <div>
-                      <p>Nombre: <input type="text" placeholder="Producto Nuevo" onChange={(e)=>setProductoNuevo(e.target.value)}/></p> 
+                      <p>Nombre: <input autoFocus type="text" placeholder="Producto Nuevo" onChange={(e)=>setProductoNuevo(e.target.value)}/></p> 
                       <p>Descripcion: <input type="text" placeholder="Descripcion" onChange={(e)=> setDescripcion(e.target.value)} /></p>
                       <p>Precio: <input type="number"  placeholder="Precio" onChange={(e)=> setPrecio(e.target.value)}/></p>
                       <select onChange={(e)=>setCategoria(e.target.value)}>
@@ -151,11 +153,11 @@ export function Producto() {
           <nav className="col-md-3 ">
           <div className="glass2 divLados">
               <h3>Ingredientes</h3>
-              <ul>
+              <ul className="ulDeslizable">
                 {
                   ingredientes.map(ingrediente=>{
                     return(
-                    <li key={ingrediente.idIngrediente}>
+                    <li  className='liConfig' key={ingrediente.idIngrediente}>
                         <p>{ingrediente.nombre}    <button onClick={()=>{handleEditarIngrediente(ingrediente.idIngrediente)}} className="btnConfig"></button></p>
                     </li>
                     )
@@ -164,14 +166,24 @@ export function Producto() {
               </ul>
             <div className="btnEnd">
               {
-                mostrarAgregarIng ? 
-                <p> <br />
-                  <button onClick={()=>{setMostrarAgregarIng(!mostrarAgregarIng)}}>Agregar</button>
-                </p> :
-                <div className="">
-                    <input type="text" onChange={(e) => setNombIngredientes(e.target.value)} placeholder="Nuevo Ingrediente"/> <br />
-                    <button onClick={()=>{setMostrarAgregarIng(!mostrarAgregarIng), setNombIngredientes("")}}>Cancelar</button> <button onClick={handleGuardarIngrediente}>Guardar</button>
-                </div>
+                mostrarEditarIng ?(
+                    mostrarAgregarIng ? 
+                    <p> <br />
+                      <button onClick={()=>{setMostrarAgregarIng(!mostrarAgregarIng)}}>Agregar</button>
+                    </p> :
+                    <div className="">
+                        <input type="text" autoFocus  onChange={(e) => setNombIngredientes(e.target.value)} placeholder="Nuevo Ingrediente"/> <br />
+                        <button onClick={()=>{setMostrarAgregarIng(!mostrarAgregarIng), setNombIngredientes("")}}>Cancelar</button> <button onClick={handleGuardarIngrediente}>Guardar</button>
+                    </div>
+                ) : (
+                  <div>
+                    <p>
+                      <br />
+                      <button>Editar</button>
+                      <button>Borrar</button>
+                    </p>
+                  </div>
+                )
               }
             </div>
           </div>

@@ -35,7 +35,7 @@ export function VentasRealizadas() {
             <h2 className='glass2'>Ventas Realizadas</h2>
           
           <div>
-          <div className='row'>
+          <div className='row divTable'>
             <table className='glass2 m-auto col-10 border-1'>
                   <thead className='border-1'>
                       <tr className='border-1'>
@@ -47,7 +47,7 @@ export function VentasRealizadas() {
                   <tbody  className='border-1'>
                       {Object.keys(groupedData).map(date => (
                           groupedData[date].map((product, index) => (
-                              <tr key={product.nombre} className='border-1'>
+                              <tr  key={product.nombre} className='border-1 '>
                                   {index === 0 && (
                                       <td rowSpan={groupedData[date].length}>{date}</td>
                                   )}

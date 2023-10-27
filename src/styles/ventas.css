@@ -148,3 +148,25 @@ button{
 .divVentas{
     margin-top: 5em;
 }
+.ulDeslizable{
+    max-height: 20em;
+    overflow-y: auto;
+}
+.ulDeslizable2{
+    max-height: 24em;
+    overflow-y: auto;
+}
+button{
+    background-color: #FAB222;
+}
+input{
+    background-color: #FEF2B8;
+    color: black;
+    /* FEF2B8
+       FFD500; */
+}
+
+.divTable{
+    max-height: 30em;
+    overflow-y: auto; 
+}

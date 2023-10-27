@@ -24,35 +24,42 @@ console.log(listadoVentas)
   useEffect(() => mostrarListadoVentas(), []);
 
   const TablaListado = (
-    <div className="container">
-      <NavPrincipal/>
+    <>
+        <NavPrincipal/>
 
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Fecha y Hora</th>
-            <th>Número de Venta</th>
-            <th>Importe total:</th>
-            <th>Detalle</th>
-          </tr>
-        </thead>
+        <div className="row col-11 glass m-auto div_Factura">
+          <h3>Factura</h3>
 
-        <tbody>
-          {listadoVentas.map((listadoVentas, index) => (
-            <tr key={index}>
-              <td>{listadoVentas.fechaYHora.slice(0,10)}</td>
-              <td>{listadoVentas.idVenta}</td>
-              <td>{listadoVentas.montoTotal}</td>
-              <td>
-                <button onClick={() => mostrarDetalle(listadoVentas.idVenta)}>
-                  Ver Detalle
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
+          <div className="container">
+
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Fecha y Hora</th>
+                  <th>Número de Venta</th>
+                  <th>Importe total:</th>
+                  <th>Detalle</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {listadoVentas.map((listadoVentas, index) => (
+                  <tr key={index}>
+                    <td>{listadoVentas.fechaYHora.slice(0,10)}</td>
+                    <td>{listadoVentas.idVenta}</td>
+                    <td>{listadoVentas.montoTotal}</td>
+                    <td>
+                      <button onClick={() => mostrarDetalle(listadoVentas.idVenta)}>
+                        Ver Detalle
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </div>
+    </>
   );
 
   const TablaDetalle = detalleVentaId && (

@@ -145,3 +145,15 @@ button{
 .divProductos{
     margin-top: 5em;
 }
+
+.ulProductos{
+    max-height: 19em;
+    background-color: aliceblue;
+    overflow-y: auto;
+
+}
+.liConfig{
+    height: 2em;
+    margin-top: auto;
+    align-items: center;
+}

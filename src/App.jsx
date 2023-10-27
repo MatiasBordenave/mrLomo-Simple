@@ -1,7 +1,7 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 
 
-import {  Producto, Ventas, ListadoVentas, VentasRealizadas, TablaStock, MainStockDisponible, Home } from "./constants/constants"
+import {  Producto, Ventas, ListadoVentas, VentasRealizadas, TablaStock, Home } from "./constants/constants"
 
 
 function App() {
@@ -17,7 +17,6 @@ function App() {
             <Route path="/VentasRealizadas" element={<VentasRealizadas/>} />   
             <Route path="/ListadoVentas" element={<ListadoVentas/>} /> 
             <Route path="/TablaStock" element={<TablaStock/>} /> 
-            <Route path="/MainStockDisponible" element={<MainStockDisponible/>} /> 
           </Routes>
       </BrowserRouter>
     </>

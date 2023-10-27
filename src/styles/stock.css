@@ -1,9 +1,8 @@
 .fondo{
-    background: url(../assets/mrLomo.png) no-repeat center top;
-    background-color: rgb(210, 154, 0);
     text-align: center;
     margin: auto;
     margin-top: 5em;
+    padding: 5px;
     
 }
 
@@ -13,7 +12,14 @@
     margin: auto;
 }
 
-h1{
-    border:3px red solid;
-    color: black;
+.glass{
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 6px;
+    border: solid 1px rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(4px);
+}
+.tDeslizable{
+    max-height: 1em;
+    overflow-y: auto;
 }

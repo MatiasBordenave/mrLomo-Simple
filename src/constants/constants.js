@@ -29,8 +29,6 @@ export { Producto } from  '../pages/Producto/Producto'
 export { ListadoVentas } from  '../pages/Factura/ListadoVentas'
 export { DetalleVenta } from  '../pages/Factura/DetalleVenta'
 export { TablaStock } from  '../pages/Stock/TablaStock'
-export { MainStockDisponible } from  '../pages/Stock/MainStockDisponible'
-
 
 //  Components  //
 

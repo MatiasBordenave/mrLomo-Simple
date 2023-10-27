@@ -64,7 +64,7 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
 
                               <div className='divBtnProducto'>
                                   <button className='btnHandler' onClick={handleRestar}>-</button> 
-                                  <input className='inputProducto' type='number' value={contador} onChange={(e)=>{setContador(e.target.value)}}></input> 
+                                  <input className='inputProducto' type='number' autoFocus value={contador} onChange={(e)=>{setContador(e.target.value)}}></input> 
                                   <button className='btnHandler' onClick={handleSumar}>+</button>    
                                   <button onClick={() => handleAgregarDetalleVenta(unProducto, contador)}>Agregar</button>
 

@@ -11,6 +11,7 @@ export  function Categoria() {
 
   const [mostrarAgregarCat, setMostrarAgregarCat] = useState(true);
 
+
     const getCategorias = () => {
         axios.get(CATEGORIA_GET).then((resp) => {
           setCategoriasArray(resp.data);
@@ -41,11 +42,12 @@ export  function Categoria() {
         <nav className='divLados'>
             
             <h3>Categorias</h3>
-            <ul>
+            <ul className='ulDeslizable'>
               {categoriasArray.length > 0 ? (
                 <div >
                   {categoriasArray.map((categoria, index) => (
-                    <li  key={index}>
+                    <li className='liConfig'  key={index}>
+                      <button className="btnConfig"></button>
                       <button>{categoria.nombre}</button>
                     </li>
                   ))}
@@ -63,8 +65,8 @@ export  function Categoria() {
                   </p>
                 ):
                 <p className=''>
-                  <input type="text" onChange={(e) => setCategoria(e.target.value)} placeholder="Nuevo Categoria" className='btnEnd'/> <br />
-                        <button onClick={()=>{setMostrarAgregarCat(!mostrarAgregarCat), setCategoria("")}}>Cancelar</button> <button onClick={handleGuardarCategoria}>Guardar</button>
+                  <input type="text" autoFocus onChange={(e) => setCategoria(e.target.value)} placeholder="Nuevo Categoria" className='btnEnd'/> <br />
+                  <button onClick={()=>{setMostrarAgregarCat(!mostrarAgregarCat), setCategoria("")}}>Cancelar</button> <button onClick={handleGuardarCategoria}>Guardar</button>
                 </p>
               }
 
