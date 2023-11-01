@@ -157,3 +157,11 @@ button{
     margin-top: auto;
     align-items: center;
 }
+.liConfig1{
+    height: 2em;
+    margin-top: auto;
+    align-items: center;
+    display: flex;
+    justify-content: end;
+    margin-right: 25px;
+}

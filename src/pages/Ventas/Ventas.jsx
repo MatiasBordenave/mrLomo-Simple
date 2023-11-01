@@ -98,6 +98,7 @@ export function Ventas() {
             }).then((resp) => {
                 getNumFactura()
                 setTotal(null)
+                alert("se realizo la venta")
                 }
             )
         }else(alert("No hay productos para realizar la venta"))

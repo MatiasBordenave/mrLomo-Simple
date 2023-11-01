@@ -101,7 +101,7 @@ export function Producto() {
         <NavPrincipal />
       <div className="row m-auto col-12 main">
         <h2 className="glass2">Lista de Productos</h2>
-        <div className="col-3">
+        <div className="col-md-3">
           <Categoria/>
         </div>
 
@@ -157,7 +157,7 @@ export function Producto() {
                 {
                   ingredientes.map(ingrediente=>{
                     return(
-                    <li  className='liConfig' key={ingrediente.idIngrediente}>
+                    <li  className='liConfig1' key={ingrediente.idIngrediente}>
                         <p>{ingrediente.nombre}    <button onClick={()=>{handleEditarIngrediente(ingrediente.idIngrediente)}} className="btnConfig"></button></p>
                     </li>
                     )

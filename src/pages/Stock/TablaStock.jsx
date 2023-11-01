@@ -10,6 +10,8 @@ export const TablaStock = () => {
 
     const [stock, setStock] = useState([])
     const [contador, setContador] = useState();
+    const [idProducto, setIdProducto] = useState();
+    const [unProducto, setUnProducto] = useState([]);
     const [MostrarEditar, setMostrarEditar] = useState(false);
     const [productoActual, setProductoActual] = useState(false);
     const [aux, setAux] = useState()
@@ -39,10 +41,18 @@ export const TablaStock = () => {
             setStock(response.data)
         })
     }
+    const mostrarUnProducto = () =>{
+        Axios.get(`http://localhost:8000/stock/${idProducto}`)
+        .then((resp)=>{
+            setUnProducto(resp.data)
+        })
+    }
+
 
     useEffect(() => {
         mostrarstock();
-    }, [])
+        mostrarUnProducto();
+    }, [idProducto])
 
    
 
@@ -86,7 +96,7 @@ export const TablaStock = () => {
                             </thead>
                             <tbody>
                                 {
-                                    productoActual && stock.map((stock) => {
+                                    productoActual && unProducto.map((stock) => {
 
                                         return (
                                             <tr
@@ -99,8 +109,8 @@ export const TablaStock = () => {
 
                                                     <input onChange={(e) => setContador(e.target.value)} value={contador} type="number" />
 
-                                                </td><td><Button variant="danger" onClick={(() => { handleGuardar(stock) })}>Guardar</Button>{' '}</td>
-                                                <td><Button variant="danger" onClick={(() => { handleCancelar(stock.codStock) })}>Cancelar</Button>{' '}</td>
+                                                </td><td><button  onClick={(() => { handleGuardar(stock) })}>Guardar</button>{' '}</td>
+                                                <td><button  onClick={(() => { handleCancelar(stock.codStock) })}>Cancelar</button>{' '}</td>
                                             </tr>)
                                     }
                                     )
@@ -133,12 +143,14 @@ export const TablaStock = () => {
                                         <td>
                                             {stock.cantidad}
 
-                                        </td><td><Button variant="danger" onClick={(() => {
+                                        </td><td><button onClick={(() => {
                                             setMostrarEditar(true)
-                                            setProductoActual(stock.idStock)
+                                            setIdProducto(stock.idIngrediente)
                                             setContador(stock.cantidad)
-                                        })}>Editar</Button>{' '}</td>
-                                        <td><Button variant="danger" onClick={(() => { handleEliminar(stock.idStock) })}>Eliminar</Button>{' '}</td>
+                                            setProductoActual(true)
+                                            mostrarUnProducto()
+                                        })}>Editar</button>{' '}</td>
+                                        <td><button onClick={(() => { handleEliminar(stock.idStock) })}>Eliminar</button>{' '}</td>
                                     </tr>)
                             })
                         }
