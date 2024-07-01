@@ -9,6 +9,18 @@ body{
     background-color: rgb(210, 154, 0);
     text-align: center;
 }
+.custom-toggle-button {
+    color: #000; /* Color de texto negro */
+  }
+  
+  .custom-toggle-button.active {
+    background-color: #8aff8a; /* Color verde claro cuando está activo */
+  }
+  
+  .custom-toggle-button.inactive {
+    background-color: #ff8a8a; /* Color rojo claro cuando está inactivo */
+  }
+
 .main{
     background: url(../assets/mrLomo.png) no-repeat center;
     height: 100%;
@@ -102,6 +114,8 @@ button{
     text-align: center;
 }
   
+
+
 .button-volver {
     align-self: flex-start;
     margin: 10px;
@@ -146,7 +160,7 @@ button{
     border: none;
 }
 .divVentas{
-    margin-top: 5em;
+    /* margin-top: 5em; */
 }
 .ulDeslizable{
     max-height: 20em;

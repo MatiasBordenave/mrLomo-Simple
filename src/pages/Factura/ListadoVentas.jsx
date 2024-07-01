@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Table from 'react-bootstrap/Table';
 import DetalleVenta from "./DetalleVenta";
-import { NavPrincipal } from "../../constants/constants";
+import { Footer, NavPrincipal } from "../../constants/constants";
 import '../../styles/factura.css';
 
 
@@ -30,7 +30,7 @@ console.log(listadoVentas)
         <div className="row col-11 glass m-auto div_Factura">
           <h3>Factura</h3>
 
-          <div className="container">
+          <div className="container1">
 
             <Table striped bordered hover>
               <thead>
@@ -59,6 +59,7 @@ console.log(listadoVentas)
             </Table>
           </div>
         </div>
+          <Footer/>
     </>
   );
 

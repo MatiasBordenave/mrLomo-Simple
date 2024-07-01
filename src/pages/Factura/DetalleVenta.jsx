@@ -19,7 +19,7 @@ export const DetalleVenta = ({ idVenta }) => {
   useEffect(() => mostrarDetalleVenta(), [idVenta]);
 
   return (
-    <div className="container">
+    <div className="container1">
       <Table striped bordered hover>
         <thead>
           <tr>

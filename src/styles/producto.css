@@ -142,10 +142,6 @@ button{
     justify-content: space-between;
 }
 
-.divProductos{
-    margin-top: 5em;
-}
-
 .ulProductos{
     max-height: 19em;
     background-color: aliceblue;

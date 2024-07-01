@@ -1,59 +1,100 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { Axios } from "axios";
 import '../../styles/producto.css';
-
-import { Categoria } from "../../constants/constants";
-
-import { CATEGORIA_GET, INGREDIENTES_GET, INGREDIENTES_GET_CRUZE, INGREDIENTES_POST, PRODUCTO_POST } from "../../constants/constants";
+import Table from 'react-bootstrap/Table';
+import { Categoria, Footer } from "../../constants/constants";
+import { CATEGORIA_GET, PRODUCTO_POST, PRODUCTO_GET} from "../../constants/constants";
 import NavPrincipal from "../../componentes/NavPrincipal/NavPrincipal";
+import { Alert } from "react-bootstrap";
+
 
 export function Producto() {
   
   const [productos, setProductos] = useState([]);
+
   //producto nuevo
-  const [productoNuevo, setProductoNuevo] = useState();
-  const [descripcion, setDescripcion] = useState();
+  const [codigo, setCodigo] = useState();
+  const [productoNuevo, setProductoNuevo] = useState("");
+  const [descripcion, setDescripcion] = useState("");
   const [precio, setPrecio] = useState();
+  const [stock, setStock] = useState(0);
+  const [categoria, setCategoria] = useState([]);
+  
   
   const [categorias, setCategorias] = useState([]);
-  const [categoria, setCategoria] = useState([]);
-  const [ingredientes, setIngredientes] = useState([])
-  const [nombIngredientes, setNombIngredientes] = useState([])
-  const [mostrarAgregarIng, setMostrarAgregarIng] = useState(true)
   const [mostrarAgregarProd, setMostrarAgregarProd] = useState(true)
-  const [mostrarEditarIng, setMostrarEditarIng] = useState(true)
+
+  /*editaR*/ 
+  const [contador, setContador] = useState();
+  const [idProducto, setIdProducto] = useState(0);
+  const [unProducto, setUnProducto] = useState([]);
+  const [MostrarEditar, setMostrarEditar] = useState(false);
+  const [productoActual, setProductoActual] = useState(false);
+  const [nombre, setNombre] = useState("");
+  const [descripcion1, setDescripcion1] = useState("");
+  const [categoria1, setCategoria1] = useState("");
+  const [stockeable, setStockeable] = useState("");
+  const [stockeableEdit, setStockeableEdit] = useState("");
+  const [validacionStockeable, setValidacionStockeable] = useState(false);
+  const [validacionStockeable1, setValidacionStockeable1] = useState(false);
+  const [validacionCategoria, setValidacionCategoria] = useState(false);
+ // const [codProducto, setCodProducto] = useState("");
 
 
 
+ /* const [mostrarUnaCat, setMostrarUnaCat] = useState([])*/
+const [select, setSelect] = useState();
+//const [nombreCat, setNombreCat] = useState("")
 
-  const getProductos = () => {
-    axios.get(INGREDIENTES_GET_CRUZE).then((resp) => {
-      setProductos(resp.data);
-    });
-  };
-  const getIngredientes = () =>{
-    axios.get(INGREDIENTES_GET)
-    .then((resp) =>{
-      setIngredientes(resp.data)
-    })
-  }
-  const getCategorias = () =>{
+ 
+  const getCategorias = () => {
     axios.get(CATEGORIA_GET)
     .then((resp)=>{
         setCategorias(resp.data)
     }) 
 }
+
+/*const getCategoriaSola = (id) => {
+  axios.get(`http://localhost:8000/categoria/categoria/`+ id)
+  .then((resp)=>{
+      setNombreCat(resp.data)
+  }) 
+}*/
+
+//console.log(nombreCat)
+
+const getProductos = () =>{
+  axios.get(PRODUCTO_GET)
+  .then((resp)=>{
+      setProductos(resp.data)
+  }) 
+  
+}
+
+const deleteProducto = (id) =>{
+  axios.delete(`http://localhost:8000/productos/borrar/` + id)
+  .then((resp)=>{
+     getProductos();
+  }) 
+  
+}
   const handleGuardarProd = () =>{
-    if( productoNuevo.length > 0 && descripcion.length > 0 && precio > 0 && categoria > 0){
+    // setValidacionStockeable(false)
+    // if(stockeable== "SI" || stockeable == "NO")
+    // {setValidacionStockeable(true)}
+    if( productoNuevo.length > 0 && descripcion.length > 0 && precio > 0 && categoria > 0 ){
       axios.post(PRODUCTO_POST,{
+        codProducto: codigo,
         nombre: productoNuevo,
         descripcion: descripcion,
         precio: precio,
-        id_Categoria: categoria
+        id_Categoria: categoria,
+        stock: stock,
+        stockeable : stockeable
       }).then((resp)=>{
         setMostrarAgregarProd(!mostrarAgregarProd)
+        alert("Se agrego un Producto")
         getProductos()
-        alert("Se agrego un Ingrediente")
         resetItems()
       })
     }else{        
@@ -61,43 +102,87 @@ export function Producto() {
     } 
   }
 
-  const handleEditarIngrediente = () =>{
-    setMostrarEditarIng(!mostrarEditarIng)
+  const onClickNuevo = ()=> {
+    getCategorias()
+    setMostrarAgregarProd(!mostrarAgregarProd)
   }
 
+
   const resetItems = () =>{
-    setNombIngredientes("")
+    setCodigo(0)
     setProductoNuevo("")
     setDescripcion("")
     setPrecio(0)
-    categoria(0)
+    setCategoria(0)
+    setStock(0)
+    setStockeable("")
+    setStockeableEdit("")
+    setValidacionStockeable1(false)
   }
 
-  const handleGuardarIngrediente = () =>{
-    if( nombIngredientes.length > 0 ){
-      axios.post(INGREDIENTES_POST,{
-        nombre: nombIngredientes
-      })
-      .then((resp)=>{
-        getIngredientes()
-        setMostrarAgregarIng(!mostrarAgregarIng)
-        resetItems()
-        alert("Se agrego un Ingrediente")
-      })
-    }else{
-      alert("Ingrese un ingrediente")
+
+
+  const mostrarUnProducto = () =>{
+
+   // console.log(idProducto)
+    if(idProducto > 0){
+        axios.get(`http://localhost:8000/productos/` + idProducto)
+        .then((resp)=>{
+            setUnProducto(resp.data)
+        })
+
     }
+
+    
+
+
+}
+
+function handleCancelarEditar() {
+  setMostrarEditar(false);
+}
+
+function handleGuardarEditar() {
+  const url = `http://localhost:8000/productos/editar/` + idProducto;
+  let newObj = {
+    codProducto : idProducto,
+    nombre: nombre,
+    descripcion: descripcion1,
+    precio: precio,
+    id_Categoria: categoria1,
+    stock: contador,
+    stockeable: stockeableEdit
   }
+  
+  if( nombre.length > 0 && descripcion1.length > 0 && precio > 0 && categoria1 > 0 && validacionStockeable1 == true){
+    
+    axios.put(url, newObj).then((data) => {
+      alert("Se ha realizado la ACTUALIZACION")
+      getProductos();
+      setMostrarEditar(false);
+    })
+    }
+    else{
+      alert("Ingrese los datos faltantes")
+    }
+}
 
 
-  useEffect(() => {
-    getProductos();
-    getIngredientes()
-    getCategorias()
-  }, [categoria]);
+useEffect(() => {
+  getProductos();
+  getCategorias();
+  mostrarUnProducto();
+}, [idProducto, validacionStockeable1], [idProducto], [stockeable]);
 
+  
+  //console.log(unProducto)
+  //console.log(select)
+  //console.log(nombreCat)
+  
   return (
-    <div className="divProductos">
+   
+   
+   <div className="divProductos">
         <NavPrincipal />
       <div className="row m-auto col-12 main">
         <h2 className="glass2">Lista de Productos</h2>
@@ -105,90 +190,186 @@ export function Producto() {
           <Categoria/>
         </div>
 
-          <aside className="col-md-6">
+
+          <aside className="col-md-9">
             <div className="glass2 productos ">
+ 
+              {
+                          MostrarEditar ? (<div>
+
+      <h1>Editar Producto</h1>
+                              <Table striped bordered hover variant="warning" className='md tabla'>
+                                  <thead className=''>
+                                      <tr className=''>
+                                      <th>Codigo</th>
+                                  <th>Nombre</th>
+                                  <th>Descripcion</th>
+                                  <th>Precio</th>
+                                  <th>Stockeable</th>
+                                  {
+                                    stockeableEdit == "SI" &&
+                                    <th>Stock</th>
+                                  }
+                                  <th>Categoria</th>
+                                          <th>Guardar</th>
+                                          <th>Cancelar</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      {
+                                        productoActual && unProducto.map((stock) => {
+                                          
+                                          return (
+                                            <tr
+                                            className='' key={stock.codProducto}>
+                                                    <td>{stock.codProducto}</td>
+                                                    <td><input type="text" onChange={(e) => setNombre(e.target.value)} value={nombre}/></td>
+                                                    <td><input  value={descripcion1} onChange={(e) => setDescripcion1(e.target.value)}  type="text" /></td>
+                                                    <td><input type="number" value={precio} onChange={(e) => setPrecio(e.target.value)}/></td>
+                                                    <td>
+                                                    <select name="" id=""  onChange={(e)=>{setStockeableEdit(e.target.value), setValidacionStockeable1(true)}}>
+                                                      <option value="NO"></option>
+                                                      <option value="SI">SI</option> 
+                                                      <option value="NO">NO</option>
+                                                      </select>
+                                                    </td>
+                                                    {
+                                                      stockeableEdit == "SI" && 
+                                                        <td> <input onChange={(e) => setContador(e.target.value)} value={contador} type="number" /></td>
+                                                    }
+                                                 
+                                                    <td>
+                                                      <select onChange={(e) => setCategoria1(e.target.value)}>
+                                                        <option value={select}></option>
+                                                        {categorias.map((categoria) => (
+                                                          <option key={categoria.idCategoria} value={categoria.idCategoria}>
+                                                            {categoria.nombre}
+                                                          </option>
+                                                        ))}
+                                                      </select>
+                                                    </td>
+                                                    <td><button  onClick={(() => { handleGuardarEditar(stock) })}>Guardar</button>{' '}</td>
+                                                    <td><button  onClick={(() => { handleCancelarEditar(stock.codStock) })}>Cancelar</button>{' '}</td>
+                                                     
+                                              
+                                                  </tr>)
+                                          }
+                                          )
+                                        }
+                                  </tbody>
+                              </Table>
+                                        </div>
+                              ) :(null)
+                      }
+              
+              
               {
                 mostrarAgregarProd ? (
                   <div className="divLados">
                     <h3>Productos</h3>
-                    <ul className="ulDeslizable">
-                      {
-                        productos.map((producto, index)=>{
-                          return(
-                            <li key={index}>
-                                <p>{producto.nombreProducto}: ({producto.ingredientes})</p>
-                            </li>
-                          )
-                        })
-                      }
-                    </ul> 
-                    <div className="btnEnd"> <br />
-                      <button  onClick={()=> setMostrarAgregarProd(!mostrarAgregarProd)}>Nuevo</button>              
-                    </div>
+
+                    <Table striped bordered hover variant="warning" className='tabla'>
+                    <thead className=''>
+                        <tr className=''>
+
+
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Stockeable</th>
+                            <th>Categoria</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            productos.map((producto) => {
+                                return (
+                                    <tr
+                                        className='' key={producto.codProducto} >
+
+                                        <td >{producto.codProducto}</td>
+                                        <td>{producto.nombre}</td>
+                                        <td>{producto.descripcion}</td>
+                                        <td>{producto.precio}</td>
+                                        <td>{producto.stock}</td>
+                                        <td>{producto.stockeable}</td>
+                                        <td>{producto.categoria}</td>
+                                        
+                                        
+                                        
+                                        <td><button onClick={(() => {
+                                            setMostrarEditar(true)
+                                            setProductoActual(true)
+                                            setIdProducto(producto.codProducto)
+                                            setContador(producto.stock)
+                                            setDescripcion1(producto.descripcion)
+                                            setNombre(producto.nombre)
+                                            setSelect(producto.codProducto)
+                                            setPrecio(producto.precio)
+                                            mostrarUnProducto(producto.codProducto)
+                                         //   getCategoriaSola(producto.codProducto)
+                                        })}>Editar</button>{' '}</td>
+
+
+
+
+                                        <td><button onClick={(() => {deleteProducto(producto.codProducto)}
+                                    )}>Eliminar</button>{' '}</td>
+                                    </tr>)
+                            })
+                        }
+                    </tbody>
+                </Table>
+
+    
+                      <div className="btnEnd">
+                      <button  onClick={onClickNuevo}>Nuevo</button>              
+                      </div>
                   </div>
                 ) : (
                   <div>
-                      <p>Nombre: <input autoFocus type="text" placeholder="Producto Nuevo" onChange={(e)=>setProductoNuevo(e.target.value)}/></p> 
+                  <h3>Producto Nuevo</h3>
+                    <p>Codigo: <input type="number" autoFocus placeholder="Codigo" onChange={(e)=>setCodigo(e.target.value)}/></p> 
+                      <p>Nombre: <input  type="text" placeholder="Producto Nuevo" onChange={(e)=>setProductoNuevo(e.target.value)}/></p> 
                       <p>Descripcion: <input type="text" placeholder="Descripcion" onChange={(e)=> setDescripcion(e.target.value)} /></p>
                       <p>Precio: <input type="number"  placeholder="Precio" onChange={(e)=> setPrecio(e.target.value)}/></p>
-                      <select onChange={(e)=>setCategoria(e.target.value)}>
+                      <select required onChange={(e)=>setCategoria(e.target.value)}>
                         <option  value="1"></option>
                         {categorias.map((categoria)=>(
                         <option  key={categoria.idCategoria} value={categoria.idCategoria}>{categoria.nombre}</option>
                         ))}
                       </select>
+                      <tr></tr>
+                      <p>Stock Activo: 
+                        <select name="" id=""  onChange={(e)=>{setStockeable(e.target.value)}}>
+                        <option value="NO"></option>
+                        <option value="SI">SI</option> 
+                        <option value="NO" onClick={()=> setStock(0)}>NO</option>
+                        </select>
+                      </p>
+                      {
+                        stockeable == "SI" && 
+                        <p>Stock: <input type="number" placeholder="Stock" defaultValue={0} onChange={(e)=> setStock(e.target.value)}/></p>
+                      }
 
 
-
-                      <p>Ingredientes: </p>
+                      
+                      <button onClick={handleGuardarProd}>Guardar</button>
 
                       <button onClick={()=>{setMostrarAgregarProd(!mostrarAgregarProd), resetItems()}}>Cancelar</button>
-                      <button onClick={handleGuardarProd}>Guardar</button>
                   </div>
                 )
 
               }
             </div>
           </aside>
-          <nav className="col-md-3 ">
-          <div className="glass2 divLados">
-              <h3>Ingredientes</h3>
-              <ul className="ulDeslizable">
-                {
-                  ingredientes.map(ingrediente=>{
-                    return(
-                    <li  className='liConfig1' key={ingrediente.idIngrediente}>
-                        <p>{ingrediente.nombre}    <button onClick={()=>{handleEditarIngrediente(ingrediente.idIngrediente)}} className="btnConfig"></button></p>
-                    </li>
-                    )
-                  })
-                }
-              </ul>
-            <div className="btnEnd">
-              {
-                mostrarEditarIng ?(
-                    mostrarAgregarIng ? 
-                    <p> <br />
-                      <button onClick={()=>{setMostrarAgregarIng(!mostrarAgregarIng)}}>Agregar</button>
-                    </p> :
-                    <div className="">
-                        <input type="text" autoFocus  onChange={(e) => setNombIngredientes(e.target.value)} placeholder="Nuevo Ingrediente"/> <br />
-                        <button onClick={()=>{setMostrarAgregarIng(!mostrarAgregarIng), setNombIngredientes("")}}>Cancelar</button> <button onClick={handleGuardarIngrediente}>Guardar</button>
-                    </div>
-                ) : (
-                  <div>
-                    <p>
-                      <br />
-                      <button>Editar</button>
-                      <button>Borrar</button>
-                    </p>
-                  </div>
-                )
-              }
-            </div>
-          </div>
-        </nav>
+
       </div>
+      <Footer/>
     </div>
   );
 }

@@ -2,15 +2,17 @@ import Axios from "axios";
 import { useEffect, useState } from "react"
 import { Button } from "react-bootstrap";
 import Table from 'react-bootstrap/Table';
-import { NavPrincipal } from "../../constants/constants";
+import { Footer, NavPrincipal } from "../../constants/constants";
 import '../../styles/stock.css';
+
+import { STOCK_GET } from "../../constants/constants";
 
 
 export const TablaStock = () => {
 
     const [stock, setStock] = useState([])
     const [contador, setContador] = useState();
-    const [idProducto, setIdProducto] = useState();
+    const [idProducto, setIdProducto] = useState(0);
     const [unProducto, setUnProducto] = useState([]);
     const [MostrarEditar, setMostrarEditar] = useState(false);
     const [productoActual, setProductoActual] = useState(false);
@@ -23,11 +25,9 @@ export const TablaStock = () => {
 
 
 
-    const handleEliminar = (idStock) => {
-        setAux(idStock)
+    const handleEliminar = (id) => {
         const url = "http://localhost:8000/stock/eliminar/"
-        console.log(idStock)
-        Axios.delete(url + aux).then(() => {
+        Axios.delete(url + id).then(() => {
             mostrarstock()
             alert("borrado")
         })
@@ -37,15 +37,18 @@ export const TablaStock = () => {
 
 
     const mostrarstock = () => {
-        Axios.get("http://localhost:8000/stock").then((response) => {
+        Axios.get(STOCK_GET).then((response) => {
             setStock(response.data)
         })
+        console.log(stock)
     }
     const mostrarUnProducto = () =>{
-        Axios.get(`http://localhost:8000/stock/${idProducto}`)
-        .then((resp)=>{
-            setUnProducto(resp.data)
-        })
+        if(idProducto > 0){
+            Axios.get(`http://localhost:8000/stock/${idProducto}`)
+            .then((resp)=>{
+                setUnProducto(resp.data)
+            })
+        }
     }
 
 
@@ -64,7 +67,7 @@ export const TablaStock = () => {
     }
 
     function handleGuardar(stock) {
-        const url = `http://localhost:8000/stock/editar/${stock.idStock}`;
+        const url = `http://localhost:8000/stock/editar/${stock.codProducto}`;
         let newObj = {
             ...stock, cantidad: contador
         }
@@ -79,7 +82,7 @@ export const TablaStock = () => {
         <>
             <NavPrincipal />
 
-            <div className="fondo row col-11 glass">
+            <div className="divStock fondo row col-11 glass">
 
                 {
                     MostrarEditar ?
@@ -87,7 +90,7 @@ export const TablaStock = () => {
                         <Table striped bordered hover variant="warning" className='tablaeditar'>
                             <thead className=''>
                                 <tr className=''>
-
+                                    <th>Codigo</th>
                                     <th>Nombre</th>
                                     <th>Cantidad</th>
                                     <th>Guardar</th>
@@ -102,14 +105,15 @@ export const TablaStock = () => {
                                             <tr
                                                 className='' key={stock.idStock + "edit"}>
 
-                                              
+                                              <td>{stock.codProducto}</td>
                                                 <td>{stock.nombre}
                                                 </td>
                                                 <td>
 
                                                     <input onChange={(e) => setContador(e.target.value)} value={contador} type="number" />
 
-                                                </td><td><button  onClick={(() => { handleGuardar(stock) })}>Guardar</button>{' '}</td>
+                                                </td>
+                                                <td><button  onClick={(() => { handleGuardar(stock) })}>Guardar</button>{' '}</td>
                                                 <td><button  onClick={(() => { handleCancelar(stock.codStock) })}>Cancelar</button>{' '}</td>
                                             </tr>)
                                     }
@@ -125,10 +129,10 @@ export const TablaStock = () => {
                         <tr className=''>
 
 
+                            <th>Codigo</th>
                             <th>Nombre</th>
                             <th>Cantidad</th>
                             <th>Editar</th>
-                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -136,29 +140,30 @@ export const TablaStock = () => {
                             stock.map((stock) => {
                                 return (
                                     <tr
-                                        className='' key={stock.idIngrediente}>
+                                        className='' key={stock.codProducto}>
 
 
+                                            <td>{stock.codProducto}</td>
                                         <td>{stock.nombre}</td>
                                         <td>
-                                            {stock.cantidad}
+                                            {stock.stock}
 
                                         </td><td><button onClick={(() => {
                                             setMostrarEditar(true)
-                                            setIdProducto(stock.idIngrediente)
-                                            setContador(stock.cantidad)
+                                            setIdProducto(stock.codProducto)
+                                            setContador(stock.stock)
                                             setProductoActual(true)
                                             mostrarUnProducto()
                                         })}>Editar</button>{' '}</td>
-                                        <td><button onClick={(() => { handleEliminar(stock.idStock) })}>Eliminar</button>{' '}</td>
                                     </tr>)
                             })
                         }
                     </tbody>
                 </Table>
-
+                    
 
             </div>
+        <Footer/>
 
         </>
     )

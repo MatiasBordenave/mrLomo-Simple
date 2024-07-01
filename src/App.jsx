@@ -1,10 +1,12 @@
-import {BrowserRouter, Routes, Route} from "react-router-dom"
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
 
 
-import {  Producto, Ventas, ListadoVentas, VentasRealizadas, TablaStock, Home } from "./constants/constants"
+import {  Producto, Ventas, ListadoVentas, VentasRealizadas, TablaStock, Home, Caja } from "./constants/constants"
+
 
 
 function App() {
+
 
 
   return (
@@ -17,6 +19,8 @@ function App() {
             <Route path="/VentasRealizadas" element={<VentasRealizadas/>} />   
             <Route path="/ListadoVentas" element={<ListadoVentas/>} /> 
             <Route path="/TablaStock" element={<TablaStock/>} /> 
+            <Route path="/Caja" element={<Caja/>} />
+            <Route path="*" element={ <Navigate to='/' />} />
           </Routes>
       </BrowserRouter>
     </>

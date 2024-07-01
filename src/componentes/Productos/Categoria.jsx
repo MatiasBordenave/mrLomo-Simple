@@ -10,6 +10,7 @@ export  function Categoria() {
   const [categoria, setCategoria] = useState([]);
 
   const [mostrarAgregarCat, setMostrarAgregarCat] = useState(true);
+  const [unaCategoria, setUnaCategoria] = useState([])
 
 
     const getCategorias = () => {
@@ -32,9 +33,13 @@ export  function Categoria() {
       }
     }
 
+    
+
       useEffect(() => {
         getCategorias();
       }, []);
+
+    //  console.log(unaCategoria)
     
   return (
     <div className='col-lg-12 glass2 productos'>

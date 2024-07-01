@@ -2,15 +2,23 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { PRODUCTO_GET } from '../../constants/constants'
 
+import ToggleButton from 'react-bootstrap/ToggleButton';
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
+
+import { Form } from 'react-router-dom'
 export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalleVenta, mostrarComponente }) {
-
+  
 
     const[unProducto, setUnProducto] = useState([])
     const[auxId, setAuxId] = useState(0)
     const[auxComponente, setAuxComponente] = useState(0)
     const [contador, setContador] = useState(1)
-
+    const [observacion, setObservacion] = useState(1)
+  
+    /*agregados*/
+    const [agregados, setAgregados] = useState([])
+    const [select, setSelect] = useState([])
 
       const handleRestar = () =>{
                 contador < 1 ? setContador(0) : setContador(contador - 1)
@@ -32,8 +40,16 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
       )
     }
 
+    const getAgregados = () =>{
+      axios.get(`http://localhost:8000/detalleVenta/agregados`)
+      .then((resp)=>{
+          setAgregados(resp.data)
+          })  
+      }
+
     useEffect(() => {   
       handleUnProducto()
+      getAgregados()
     }, [auxId, auxComponente])
 
     
@@ -42,6 +58,19 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
   //   setUnProducto(filteredProduct  || {});
   // }, [idProducto, producto]);
 
+  const handleChange = (event) =>{
+
+    const {value, checked} = event.target;
+    if(checked) {
+
+      setSelect([...select, value]);
+    }else{
+      setSelect(select.filter((o) => o !== value))
+    }
+
+    
+  }
+  console.log(select)
     
 
   return (
@@ -53,9 +82,9 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
       <div  className='row col-12'>
         <ul  className=''>
                     {
-                       unProducto.map(unProducto=>{
+                      unProducto.map(unProducto=>{
                         return(
-                            <li className='liTituloProducto' key={unProducto.codProducto}>                                    
+                          <li className='liTituloProducto' key={unProducto.codProducto}>                                    
 
                             <div className='divMap'>
                               <div className='divPTituloProd'>
@@ -66,15 +95,71 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
                                   <button className='btnHandler' onClick={handleRestar}>-</button> 
                                   <input className='inputProducto' type='number' autoFocus value={contador} onChange={(e)=>{setContador(e.target.value)}}></input> 
                                   <button className='btnHandler' onClick={handleSumar}>+</button>    
-                                  <button onClick={() => handleAgregarDetalleVenta(unProducto, contador)}>Agregar</button>
-
-                              </div>
-
-                            </div>
+                                  <tr></tr>
+                              </div>       
+                                                    </div>
                                 <div className='descripcion'>
                                   <p>{unProducto.descripcion}</p>
-                                </div>                                                          
-                            </li>          
+                                                                                            
+
+                                                 
+                                </div>   
+                                
+
+                                {
+                                unProducto.stockeable === "NO" && 
+                                  <div>
+                                                            <label htmlFor="">Preparacion</label>  <input type="text" value={select}/> 
+                                                             
+                                                            <label htmlFor="">Descripcion</label>  <input type="text" placeholder='Texto libre' onChange={(e)=>{setObservacion(e.target.value)}} />
+                                                              
+                                                            
+                                                            
+                                                              
+
+
+                                    
+                                  <ul>
+                                    {agregados.map((agregados) => (
+                                      <li key={agregados.codAgregado}>
+                                        <label htmlFor={`checkbox_${agregados.codAgregado}`}>
+                                          <input
+                                            type="checkbox"
+                                            id={`checkbox_${agregados.codAgregado}`}
+                                            value={agregados.nombre}
+                                            onChange={handleChange}
+                                          />
+                                          {agregados.nombre}
+                                        </label>
+                                      </li>
+                                    ))}
+                                  </ul>
+
+                                  </div>
+
+                                  
+
+                                  
+                                }
+
+
+                                  
+
+
+                          <button onClick={() => handleAgregarDetalleVenta(unProducto, contador, select,observacion)}>Agregar</button>
+                             
+                          
+
+                                                 
+                            
+                                      
+
+      
+                                  
+
+
+
+                          </li>          
                         )
                        })          
                       }           

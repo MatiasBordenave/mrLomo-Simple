@@ -1,73 +1,92 @@
+import { Link, useLocation } from "react-router-dom";
+import "../../styles/navPstyle.css";
+import Home from "./Home";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { useEffect, useState } from "react";
 
-import { Link } from 'react-router-dom';
-import '../../styles/navPstyle.css';
+export function NavPrincipal() {
 
-export  function NavPrincipal(){
-
- 
-
-    function Click(name){
-
-        const venta = document.querySelector(".DisplayVenta");
-        const factura = document.querySelector(".DisplayFactura");
-        const stock = document.querySelector(".DisplayStock");
-        const producto = document.querySelector(".DisplayProducto");
-
-        venta.classList.remove("DisplayVentaActive");
-        factura.classList.remove("DisplayFacturaActive");
-        stock.classList.remove("DisplayStockActive");
-        producto.classList.remove("DisplayProductoActive");
-
-        if(name == "venta"){
-            venta.classList.toggle("DisplayVentaActive")
-        } else if (name == "facturas"){
-                factura.classList.toggle("DisplayFacturaActive")
-            }else if (name == "stock"){
-                    stock.classList.toggle("DisplayStockActive")
-                }else if (name == "productos"){
-                    producto.classList.toggle("DisplayProductoActive")
-                }
-    }
+    const [activeLink, setActiveLink] = useState('');
+    const location = useLocation();
+  
+    useEffect(() => {
+      setActiveLink(location.pathname);
+    }, [location]);
 
 
-    return(
-        <>
-            <nav className='nav row col-xs-12'>
-            <ul>
-                <li><a href="#" onClick={()=>{Click('venta')}}>VENTAS</a></li>
-                <li><a href="#" onClick={()=>{Click('facturas')}}>FACTURAS</a></li>
-                <li><a href="#" onClick={()=>{Click('stock')}}>STOCK</a></li>
-                <li><a href="#" onClick={()=>{Click('productos')}}>PRODUCTOS</a></li>
-            </ul>
-            </nav> 
+    
+  const handleSelect = (eventKey) => alert(`selected ${eventKey}`);
+    
+  return (
+    <>
+    <div className="bodyNav">
+      <Navbar expand="lg" className="  mainNav " >
+          <Navbar.Collapse className="" >
+            <Nav className="m-auto" >
+              <NavDropdown title="Ventas" id="basic-nav-dropdown" 
+                    className={activeLink === '/Ventas' ||  activeLink === '/VentasRealizadas'  ? 'active' : ''}>
+                <NavDropdown.Item href="/Ventas"
+                
+                className={activeLink === '/Ventas' ? 'active' : ''}
+                    >
+                  Nueva Venta
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/VentasRealizadas"
+                className={activeLink === '/VentasRealizadas' ? 'active' : ''}
+                 >
+                  Ventas Realizadas
+                </NavDropdown.Item>
+              </NavDropdown>
+              <Nav.Link href="/ListadoVentas"
+              
+            className={activeLink === '/ListadoVentas' ? 'active' : ''}
+              >Facturas Realizadas</Nav.Link>
 
-            <span className='DisplayVenta'>
-                <ul>
-                    <li><Link to="/Ventas">Nueva Venta</Link></li>
-                    <li><Link to="/VentasRealizadas">Ventas Realizadas</Link></li>
-                </ul>
-            </span>
+              <Nav.Link href="/TablaStock"
+              
+            className={activeLink === '/TablaStock' ? 'active' : ''}
+            >Stock Disponible</Nav.Link>
 
-            <span className='DisplayFactura'>
-                <ul>
-                    <li><Link to="/ListadoVentas">Facturas Realizadas</Link></li>
-                </ul>
-            </span>
+              <Nav.Link href="/Producto"
+               className={activeLink === '/Producto' ? 'active' : ''}>Lista de Productos</Nav.Link>
 
-            <span className='DisplayStock'>
-                <ul>
-                    <li><Link to="/TablaStock">Stock Disponible</Link></li>
-                    
-                </ul>
-            </span>
+              <Nav.Link href="/Caja"  className={activeLink === '/Caja' ? 'active' : ''}>Ver caja</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
 
-            <span className='DisplayProducto'>
-                <ul>
-                    <li><Link to="/Producto">Lista de Productos</Link></li>
-                </ul>
-            </span>
-        </>
-        
-    )
+      </Navbar>
+    </div>
+
+    
+{/* <div className="bodyNav">
+      <Navbar expand="lg" className="  mainNav " >
+          <Navbar.Collapse className="" >
+            <Nav  variant="tabs" className="m-auto"  >
+              <NavDropdown title="Ventas" id="basic-nav-dropdown" >
+                <NavDropdown.Item href="/Ventas"
+                    >
+                  Nueva Venta
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/VentasRealizadas" >
+                  Ventas Realizadas
+                </NavDropdown.Item>
+              </NavDropdown>
+              <Nav.Link href="/ListadoVentas" >Facturas Realizadas</Nav.Link>
+
+              <Nav.Link href="/TablaStock">Stock Disponible</Nav.Link>
+
+              <Nav.Link href="/Producto" >Lista de Productos</Nav.Link>
+
+              <Nav.Link href="/Caja" >Ver caja</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+
+      </Navbar>
+    </div> */}
+    </>
+  );
 }
 export default NavPrincipal;

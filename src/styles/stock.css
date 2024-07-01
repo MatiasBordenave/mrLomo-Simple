@@ -6,6 +6,10 @@
     
 }
 
+.divStock{
+    min-height: 25em;
+}
+
 .tabla{
     width: 70%;
     text-align: center;
