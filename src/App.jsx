@@ -18,8 +18,8 @@ function App() {
             <Route path="/Ventas" element={<Ventas/>} />
             <Route path="/VentasRealizadas" element={<VentasRealizadas/>} />   
             <Route path="/ListadoVentas" element={<ListadoVentas/>} /> 
-            <Route path="/TablaStock" element={<TablaStock/>} /> 
-            <Route path="/Caja" element={<Caja/>} />
+
+
             <Route path="*" element={ <Navigate to='/' />} />
           </Routes>
       </BrowserRouter>

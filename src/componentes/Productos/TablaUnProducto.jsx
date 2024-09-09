@@ -11,6 +11,7 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
   
 
     const[unProducto, setUnProducto] = useState([])
+    const[unProductoArray, setUnProductoArray] = useState([])
     const[auxId, setAuxId] = useState(0)
     const[auxComponente, setAuxComponente] = useState(0)
     const [contador, setContador] = useState(1)
@@ -30,27 +31,26 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
 
     
     const handleUnProducto = ( ) =>{
-      setAuxId(idProducto)
-      setAuxComponente(mostrarComponente)
-      auxComponente  === false && (
 
-        axios.get(PRODUCTO_GET + auxId)
+        axios.get(`http://localhost:5000/productos/`+ idProducto)
         .then((resp)=> setUnProducto(resp.data)
-        )
+        
       )
     }
-
+    
+    
     const getAgregados = () =>{
       axios.get(`http://localhost:8000/detalleVenta/agregados`)
       .then((resp)=>{
-          setAgregados(resp.data)
-          })  
-      }
-
+        setAgregados(resp.data)
+      })  
+    }
+    
     useEffect(() => {   
       handleUnProducto()
-      getAgregados()
-    }, [auxId, auxComponente])
+      setUnProductoArray(Array.isArray(unProducto) ? unProducto : [unProducto])
+
+    }, [unProducto])
 
     
   // useEffect(() => {
@@ -70,7 +70,8 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
 
     
   }
-  console.log(select)
+
+  
     
 
   return (
@@ -82,9 +83,11 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
       <div  className='row col-12'>
         <ul  className=''>
                     {
-                      unProducto.map(unProducto=>{
+
+                      unProductoArray.map((unProducto)=>{
                         return(
-                          <li className='liTituloProducto' key={unProducto.codProducto}>                                    
+                          <li className='liTituloProducto' key={unProducto.id}>     
+                                                    
 
                             <div className='divMap'>
                               <div className='divPTituloProd'>
@@ -95,7 +98,7 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
                                   <button className='btnHandler' onClick={handleRestar}>-</button> 
                                   <input className='inputProducto' type='number' autoFocus value={contador} onChange={(e)=>{setContador(e.target.value)}}></input> 
                                   <button className='btnHandler' onClick={handleSumar}>+</button>    
-                                  <tr></tr>
+
                               </div>       
                                                     </div>
                                 <div className='descripcion'>
@@ -109,7 +112,6 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
                                 {
                                 unProducto.stockeable === "NO" && 
                                   <div>
-                                                            <label htmlFor="">Preparacion</label>  <input type="text" value={select}/> 
                                                              
                                                             <label htmlFor="">Descripcion</label>  <input type="text" placeholder='Texto libre' onChange={(e)=>{setObservacion(e.target.value)}} />
                                                               
@@ -143,22 +145,9 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
                                 }
 
 
-                                  
-
-
-                          <button onClick={() => handleAgregarDetalleVenta(unProducto, contador, select,observacion)}>Agregar</button>
+                          <button onClick={() => handleAgregarDetalleVenta(unProductoArray, contador, select,observacion)}>Agregar</button>
                              
                           
-
-                                                 
-                            
-                                      
-
-      
-                                  
-
-
-
                           </li>          
                         )
                        })          

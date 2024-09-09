@@ -45,15 +45,9 @@ export function NavPrincipal() {
             className={activeLink === '/ListadoVentas' ? 'active' : ''}
               >Facturas Realizadas</Nav.Link>
 
-              <Nav.Link href="/TablaStock"
-              
-            className={activeLink === '/TablaStock' ? 'active' : ''}
-            >Stock Disponible</Nav.Link>
-
               <Nav.Link href="/Producto"
                className={activeLink === '/Producto' ? 'active' : ''}>Lista de Productos</Nav.Link>
 
-              <Nav.Link href="/Caja"  className={activeLink === '/Caja' ? 'active' : ''}>Ver caja</Nav.Link>
             </Nav>
           </Navbar.Collapse>
 

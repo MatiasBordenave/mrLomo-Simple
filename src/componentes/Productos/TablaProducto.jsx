@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {  CATEGORIA_GET, PRODUCTO_GET } from '../../constants/constants';
+import { PRODUCTO_GET } from '../../constants/constants';
 
-export function TablaProducto({ productos, handleAgregar, categoria, mostrarTodos }) {
+export function TablaProducto({ productos, handleAgregar, mostrarTodos }) {
 
     const [prodPorCat, setProdPorCat] = useState([])
     const [auxCat, setAuxCat] = useState()
@@ -16,42 +16,20 @@ export function TablaProducto({ productos, handleAgregar, categoria, mostrarTodo
     
  
 
-    
-    useEffect(() => {
-        const getProductosPorCategoria = () =>{
-
-            setAuxCat(categoria)
-            mostrarTodos ?(
-                axios.get(PRODUCTO_GET)
-                .then((resp)=>{
-                    setProdPorCat(resp.data)
-                })           
-            )
-            :(
-                axios.get(CATEGORIA_GET + auxCat)
-                .then((resp)=>{
-                    setProdPorCat(resp.data)
-                })
-            )
-        }
-        
-        getProductosPorCategoria()
-        setAuxCat(categoria)
-    }, [categoria, auxCat, mostrarTodos])
-
   return (
 
       <div>  
+        <h1></h1>
          <ul className='tarjeta'>
                             {
                            
-                               prodPorCat.map((productos, index) =>{ 
+                           productos.map((productos, index) =>{ 
 
                                 return(
                                     <li className='liTitulo' key={index}>                                    
                                                 <p>{productos.codProducto}</p>
                                                 <p className='pTitulo'>{productos.nombre}</p> 
-                                                <button onClick={() => handleAgregar(productos.codProducto)}>Agregar</button>
+                                                <button onClick={() => handleAgregar(productos.id)}>Agregar</button>
                                     </li>
                                 )                                            
                                 })
