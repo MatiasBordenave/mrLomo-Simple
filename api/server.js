@@ -1,12 +1,13 @@
-const jsonServer = require('json-server');
+import jsonServer from 'json-server'; // Reemplaza require con import
+
 const server = jsonServer.create();
-const router = jsonServer.router('db.json'); // Asegúrate de que 'db.json' tenga los datos de la fake API.
+const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
 
 server.use(middlewares);
 server.use(router);
 
-const port = 5000; // Puerto que utilizará Vercel
+const port = 5000;
 server.listen(port, () => {
-  console.log('JSON Server is running');
+  console.log('JSON Server is running on port', port);
 });
