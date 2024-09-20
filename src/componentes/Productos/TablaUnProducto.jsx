@@ -7,7 +7,7 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
 
 import { Form } from 'react-router-dom'
-export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalleVenta, mostrarComponente }) {
+export function TablaUnProducto({ idProducto, handleVolver, handleAgregarCarrito, mostrarComponente }) {
   
 
     const[unProducto, setUnProducto] = useState([])
@@ -102,7 +102,10 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
                               </div>       
                                                     </div>
                                 <div className='descripcion'>
-                                  <p>{unProducto.descripcion}</p>
+                                  <p>{unProducto.descripcion}  ---         ${unProducto.precio}</p>
+                                 
+
+
                                                                                             
 
                                                  
@@ -145,7 +148,7 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarDetalle
                                 }
 
 
-                          <button onClick={() => handleAgregarDetalleVenta(unProductoArray, contador, select,observacion)}>Agregar</button>
+                          <button onClick={() => handleAgregarCarrito(unProductoArray, contador, select,observacion)}>Agregar</button>
                              
                           
                           </li>          

@@ -47,8 +47,6 @@ export function Ventas() {
     // aca termina el modal 
 
 
-    /*const [detalleVenta, setDetalleVenta] = useState([]);*/
-
 
     const handleAgregar = (id) => {
         setMostrarComponente(!mostrarComponente)
@@ -91,8 +89,6 @@ export function Ventas() {
             .then((resp) => {
                 setNumFactrura(resp.data.length + 1)
             })
-
-        obtenerProductosPorVenta(numFactura)
     }
 
 
@@ -193,15 +189,17 @@ export function Ventas() {
             })
     }
 
-    const handleAgregarDetalleVenta = (unProductoArray, contador, descripcion, observacion) => {
+    const handleAgregarCarrito = (unProductoArray, contador, descripcion, observacion) => {
+        console.log(unProductoArray)
 
         if (contador > 0) {
-            axios.post(DETALLEVENTA_POST, {
+            axios.post(`http://localhost:5000/carrito`, {
 
-                cod_Producto: unProductoArray.id,
-                id_Venta: numFactura,
+                cod_Producto: unProductoArray.codProducto,
+                nombre: unProductoArray.nombre,
+                num_Factura: numFactura,
                 cantidad: contador,
-                subTotal: (contador * unProductoArray.precio),
+                precio: unProductoArray.precio,
                 descripcion: 'Preparacion: ' + descripcion + '|    Aclaracion: ' + observacion
             })
             setIdProd(idProd + 1)
@@ -229,11 +227,11 @@ export function Ventas() {
         // getTotal()
         getProductoPorVenta()
         handleValidarVenta()
-        //getDetalleVenta()
+        // getDetalleVenta()
         // getMostrarUltimoSaldo()
-        const productoFiltradosPorVenta = obtenerProductosPorVenta(numFactura); // Aquí obtienes los productos
-        setProductosFiltrados(productoFiltradosPorVenta); // Actualizas el estado con los productos obtenidos
-    }, [idProd, total, mostrarTodos, validarFormaPago, validarIdentificacion, validarTipoEntrega, validarVenta])
+        // const productoFiltradosPorVenta = obtenerProductosPorVenta(numFactura); // Aquí obtienes los productos
+        // setProductosFiltrados(productoFiltradosPorVenta); // Actualizas el estado con los productos obtenidos
+    }, [idProd, total, mostrarTodos, validarFormaPago, validarIdentificacion, validarTipoEntrega, validarVenta, numFactura])
 
     console.log(productosFiltrados)
 
@@ -241,22 +239,22 @@ export function Ventas() {
 
 ///////////////////////////////////////
 
-    function obtenerProductosPorVenta(numFactura) {
-        const id_Venta = numFactura
-        console.log(numFactura)
-        // Filtramos los detalles de venta que tienen el id_Venta específico
-        const detalles = productoPorVenta.filter(detalle => detalle.id_Venta === id_Venta);
+    // function obtenerProductosPorVenta(numFactura) {
+    //     const id_Venta = numFactura
+    //     console.log(numFactura)
+    //     // Filtramos los detalles de venta que tienen el id_Venta específico
+    //     const detalles = productoPorVenta.filter(detalle => detalle.id_Venta === id_Venta);
         
-        // Buscamos los productos relacionados a cada detalle de venta
-        const productos = detalles.map(detalle => {
-          return {
-            ...detalle,  // Incluye los datos del detalle de venta
-            producto: productos.find(producto => producto.codProducto === detalle.cod_Producto)  // Encuentra el producto relacionado
-          };
-        });
+    //     // Buscamos los productos relacionados a cada detalle de venta
+    //     const productos = detalles.map(detalle => {
+    //       return {
+    //         ...detalle,  // Incluye los datos del detalle de venta
+    //         producto: productos.find(producto => producto.codProducto === detalle.cod_Producto)  // Encuentra el producto relacionado
+    //       };
+    //     });
       
-        return productos;
-      }
+    //     return productos;
+    //   }
       
   
 
@@ -273,7 +271,7 @@ export function Ventas() {
                     <article className='col-12 glass2 productos'>
                         {mostrarComponente ? <TablaProducto productos={productos} handleAgregar={handleAgregar}
                             mostrarTodos={mostrarTodos} /> : <TablaUnProducto mostrarComponente={mostrarComponente} idProducto={idProducto}
-                                handleVolver={handleVolver} handleAgregarDetalleVenta={handleAgregarDetalleVenta} />}
+                                handleVolver={handleVolver} handleAgregarCarrito={handleAgregarCarrito} />}
 
                     </article>
                 </main>

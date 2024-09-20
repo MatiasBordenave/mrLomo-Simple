@@ -39,25 +39,11 @@ export function Producto() {
   const [validacionStockeable, setValidacionStockeable] = useState(false);
   const [validacionStockeable1, setValidacionStockeable1] = useState(false);
   const [validacionCategoria, setValidacionCategoria] = useState(false);
-  // const [codProducto, setCodProducto] = useState("");
 
 
-
-  /* const [mostrarUnaCat, setMostrarUnaCat] = useState([])*/
   const [select, setSelect] = useState();
-  //const [nombreCat, setNombreCat] = useState("")
 
 
-
-
-  /*const getCategoriaSola = (id) => {
-    axios.get(`http://localhost:8000/categoria/categoria/`+ id)
-    .then((resp)=>{
-        setNombreCat(resp.data)
-    }) 
-  }*/
-
-  //console.log(nombreCat)
 
   const getProductos = () => {
     axios.get(PRODUCTO_GET)
