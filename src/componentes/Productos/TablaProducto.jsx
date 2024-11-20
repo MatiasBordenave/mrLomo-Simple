@@ -22,8 +22,7 @@ export function TablaProducto({ productos, handleAgregar, mostrarTodos }) {
         <h1></h1>
          <ul className='tarjeta'>
                             {
-                           
-                           productos.map((productos, index) =>{ 
+                           productos &&  productos.map((productos, index) =>{ 
 
                                 return(
                                     <li className='liTitulo' key={index}>                                    

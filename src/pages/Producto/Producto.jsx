@@ -54,7 +54,7 @@ export function Producto() {
   }
 
   const deleteProducto = (id) => {
-    axios.delete(`http://localhost:5000/productos/` + id)
+    axios.delete(`https://fake-api-sangucheria.vercel.app/productos/` + id)
       .then((resp) => {
         getProductos();
       })
@@ -104,7 +104,7 @@ export function Producto() {
 
      console.log(idProducto)
     if (idProducto.length > 0) {
-      axios.get(`http://localhost:5000/productos/` + idProducto)
+      axios.get(`https://fake-api-sangucheria.vercel.app/productos/` + idProducto)
         .then((resp) => {
           setUnProducto(resp.data)
         })
@@ -118,7 +118,7 @@ export function Producto() {
   }
 
   function handleGuardarEditar() {
-    const url = `http://localhost:5000/productos/` + idProducto;
+    const url = `https://fake-api-sangucheria.vercel.app/productos/` + idProducto;
     let newObj = {
       nombre: nombre,
       descripcion: descripcion1,

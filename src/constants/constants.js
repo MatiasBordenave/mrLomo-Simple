@@ -1,8 +1,8 @@
 //  Routes  //
 
 
-export const PRODUCTO_GET = 'http://localhost:5000/productos/'
-export const PRODUCTO_POST = 'http://localhost:5000/productos/'
+export const PRODUCTO_GET = 'https://fake-api-sangucheria.vercel.app/productos/'
+export const PRODUCTO_POST = 'https://fake-api-sangucheria.vercel.app/productos/'
 
 
 export const TOTAL_GET_SUMA = 'http://localhost:8000/contar/suma/'

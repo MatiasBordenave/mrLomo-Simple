@@ -5,14 +5,15 @@ import '../../styles/ventas.css';
 import { DETALLEVENTA_DELETE, DETALLEVENTA_DELETE_ALL, DETALLEVENTA_GET_VENTA, DETALLEVENTA_POST, FACTURA_GET_NUM, Footer, NavPrincipal, PRODUCTO_GET, TOTAL_GET_SUMA, VENTA_POST } from '../../constants/constants';
 import { TablaProducto, TablaUnProducto, ModalTicket } from "../../constants/constants"
 
+import productos from '../../data/productos';
+
 
 
 export function Ventas() {
 
 
-
-    const [productos, setProductos] = useState([])
     const [productosFiltrados, setProductosFiltrados] = useState([])
+    const [idCarrito, setIdCarrito] = useState(0)
 
     const [productoPorVenta, setProductoPorVenta] = useState([])
     const [idProducto, setIdProducto] = useState(1)
@@ -46,6 +47,8 @@ export function Ventas() {
     const [validarFormaPago, setValidarFormaPago] = useState(false);
     // aca termina el modal 
 
+    const [carrito, setCarrito] =useState([])
+
 
 
     const handleAgregar = (id) => {
@@ -56,65 +59,39 @@ export function Ventas() {
         setMostrarComponente(!mostrarComponente)
     }
 
-    const getProductos = () => {
+    // const getProductos = () => {
 
-        axios.get(PRODUCTO_GET)
-            .then((resp) => {
-                setProductos(resp.data)
-            })
-    }
-
-    /*const getDetalleVenta = (id) => {
-        axios.get(`http://localhost:8000/detalleVenta/`+ id)
-        .then((resp)=>{
-            setDetalleVenta(resp.dta)
-        })
-
-    }*/
-    // const getMostrarUltimoSaldo = () => {
-    //     axios.get(`http://localhost:8000/caja/mostrarUltimoSaldo`)
-    //     .then((resp) => {setUltimoSaldo(resp.data[0].saldo) })
-
-    //   }
-
-    // const getTotal = () =>{
-    //     axios.get(TOTAL_GET_SUMA + numFactura)
-    //     .then((resp) =>{
-    //         setTotal(resp.data[0].suma)
-    //     })
+    //     axios.get(PRODUCTO_GET)
+    //         .then((resp) => {
+    //             setProductos(resp.data)
+    //         })
     // }
 
     const getNumFactura = () => {
-        axios.get(FACTURA_GET_NUM)
-            .then((resp) => {
-                setNumFactrura(resp.data.length + 1)
-            })
+        // axios.get(FACTURA_GET_NUM)
+        //     .then((resp) => {
+        //         setNumFactrura(resp.data.length + 1)
+        //     })
     }
 
 
     const handleQuitar = (id) => {
-        axios.delete(DETALLEVENTA_DELETE + id)
-            .then(() => {
-                alert("Se elimino un pedido")
-                getProductoPorVenta()
-                getTotal()
-                getNumFactura()
-            })
+         
+            // Filtrar el carrito para eliminar el producto con el cod_Producto correspondiente
+            setCarrito(prevCarrito => prevCarrito.filter(producto => producto.id !== id));
+        
+        
     }
 
     const handleCancelar = () => {
-        // acá agrego la parte para llamar al modal
 
-        // acá termina la parte para llamar al modal
+        if (carrito.length > 0) {
 
-        if (productoPorVenta.length > 0) {
-
-            axios.delete(DETALLEVENTA_DELETE_ALL + numFactura)
-                .then(() => {
+                    setCarrito([])
                     getProductoPorVenta()
-                    getTotal()
+                    setTotal(0)
                     resetItems()
-                })
+
         } else (alert("No hay productos para realizar la venta"))
     }
 
@@ -127,7 +104,7 @@ export function Ventas() {
 
     const handleFinalizarVenta = () => {
 
-        if (productoPorVenta.length > 0 && validarVenta === true) {
+        if (carrito.length > 0 && validarVenta === true) {
             const fechaActual = new Date()
             const dia = fechaActual.getDate();
             const mes = fechaActual.getMonth() + 1; // Los meses empiezan desde 0, por lo que sumamos 1
@@ -183,34 +160,45 @@ export function Ventas() {
     }
 
     const getProductoPorVenta = () => {
-        axios.get(DETALLEVENTA_GET_VENTA)
-            .then((resp) => {
-                setProductoPorVenta(resp.data)
-            })
+        // axios.get(DETALLEVENTA_GET_VENTA)
+        //     .then((resp) => {
+        //         setProductoPorVenta(resp.data)
+        //     })
     }
-
     const handleAgregarCarrito = (unProductoArray, contador, descripcion, observacion) => {
-        console.log(unProductoArray)
-
+        
         if (contador > 0) {
-            axios.post(`http://localhost:5000/carrito`, {
-
-                cod_Producto: unProductoArray.codProducto,
+            const productoNuevo = {
+                id: idCarrito,
+                cod_Producto: unProductoArray.id,
                 nombre: unProductoArray.nombre,
                 num_Factura: numFactura,
                 cantidad: contador,
                 precio: unProductoArray.precio,
-                descripcion: 'Preparacion: ' + descripcion + '|    Aclaracion: ' + observacion
-            })
-            setIdProd(idProd + 1)
-            setMostrarComponente(true)
-            // getTotal()
-            getNumFactura()
-
-            //// setMostrarObservacion(descripcion.join('-'))
-
-        } else alert("Debe ingresar una cantidad")
-    }
+                descripcion: 'Preparacion: ' + descripcion + '| Aclaracion: ' + observacion,
+                subTotal: unProductoArray.precio * contador
+            };
+    
+            // Usar el estado previo para actualizar el carrito
+            setCarrito(prevCarrito => {
+                const nuevoCarrito = [...prevCarrito, productoNuevo];
+                console.log('Nuevo carrito: ', nuevoCarrito);
+                return nuevoCarrito;
+            });
+    
+            // Actualizar el idProd y numFactura de manera segura
+            setIdProd((prevIdProd) => prevIdProd + 1);
+            setIdCarrito(idCarrito + 1)
+            setTotal(total + productoNuevo.subTotal)
+    
+            // Mostrar el componente o realizar otras acciones
+            setMostrarComponente(true);
+        } else {
+            alert("Debe ingresar una cantidad");
+        }
+    };
+    
+    console.log(carrito)
 
     const resetItems = () => {
         setTipoEntrega("")
@@ -219,10 +207,12 @@ export function Ventas() {
         setValidarFormaPago(false)
         setValidarIdentificacion(false)
         setValidarTipoEntrega(false)
+        setIdCarrito(0)
     }
 
+    
     useEffect(() => {
-        getProductos()
+        // getProductos()
         getNumFactura()
         // getTotal()
         getProductoPorVenta()
@@ -231,34 +221,15 @@ export function Ventas() {
         // getMostrarUltimoSaldo()
         // const productoFiltradosPorVenta = obtenerProductosPorVenta(numFactura); // Aquí obtienes los productos
         // setProductosFiltrados(productoFiltradosPorVenta); // Actualizas el estado con los productos obtenidos
-    }, [idProd, total, mostrarTodos, validarFormaPago, validarIdentificacion, validarTipoEntrega, validarVenta, numFactura])
+    }, [idProd, total, mostrarTodos, validarFormaPago, validarIdentificacion, validarTipoEntrega, validarVenta, numFactura, carrito])
 
-    console.log(productosFiltrados)
-
-
-
-///////////////////////////////////////
-
-    // function obtenerProductosPorVenta(numFactura) {
-    //     const id_Venta = numFactura
-    //     console.log(numFactura)
-    //     // Filtramos los detalles de venta que tienen el id_Venta específico
-    //     const detalles = productoPorVenta.filter(detalle => detalle.id_Venta === id_Venta);
-        
-    //     // Buscamos los productos relacionados a cada detalle de venta
-    //     const productos = detalles.map(detalle => {
-    //       return {
-    //         ...detalle,  // Incluye los datos del detalle de venta
-    //         producto: productos.find(producto => producto.codProducto === detalle.cod_Producto)  // Encuentra el producto relacionado
-    //       };
-    //     });
-      
-    //     return productos;
-    //   }
-      
-  
-
-
+    useEffect(() => {
+        if (carrito.length > 0) {
+            // Actualizar numFactura solo cuando el carrito cambie
+            getNumFactura(); // O realiza la lógica necesaria aquí para actualizar la factura
+        }
+    }, [carrito]); // Dependencia en carrito
+    
 
     return (
         <div className='divVentas'>
@@ -270,7 +241,7 @@ export function Ventas() {
                 <main className='col-lg-8 mainVentas'>
                     <article className='col-12 glass2 productos'>
                         {mostrarComponente ? <TablaProducto productos={productos} handleAgregar={handleAgregar}
-                            mostrarTodos={mostrarTodos} /> : <TablaUnProducto mostrarComponente={mostrarComponente} idProducto={idProducto}
+                            mostrarTodos={mostrarTodos} /> : <TablaUnProducto mostrarComponente={mostrarComponente} idProducto={idProducto} productos={productos}
                                 handleVolver={handleVolver} handleAgregarCarrito={handleAgregarCarrito} />}
 
                     </article>
@@ -300,17 +271,17 @@ export function Ventas() {
 
                         <ul className='ulDeslizable2'>
                             {
-                                productosFiltrados.map((producto) => {
-                                    if (producto.id_Venta === numFactura) {
+                                carrito.map((producto) => {
+                                    if (producto.num_Factura === numFactura) {
                                         return (
-                                            <li className='border-1' key={producto.idDetalleVenta}>
+                                            <li className='border-1' key={producto.id}>
                                                 <p>
                                                     {producto.cantidad} -- {producto.nombre} -- {producto.precio} --
                                                     {producto.stockeable === "NO" && (
                                                         <span>{producto.observacion}</span> 
                                                     )}
                                                 </p>
-                                                <button onClick={() => handleQuitar(producto.idDetalleVenta)}>Quitar</button>
+                                                <button onClick={() => handleQuitar(producto.id)}>Quitar</button>
                                             </li>
                                         );
                                     } else {
