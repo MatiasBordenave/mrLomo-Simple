@@ -5,7 +5,7 @@ import '../../styles/ventas.css';
 import { DETALLEVENTA_DELETE, DETALLEVENTA_DELETE_ALL, DETALLEVENTA_GET_VENTA, DETALLEVENTA_POST, FACTURA_GET_NUM, Footer, NavPrincipal, PRODUCTO_GET, TOTAL_GET_SUMA, VENTA_POST } from '../../constants/constants';
 import { TablaProducto, TablaUnProducto, ModalTicket } from "../../constants/constants"
 
-import productosData from '../../data/productos';
+import productosData from '../../data/productos.js';
 
 
 
