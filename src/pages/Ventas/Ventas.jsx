@@ -5,7 +5,7 @@ import '../../styles/ventas.css';
 import { DETALLEVENTA_DELETE, DETALLEVENTA_DELETE_ALL, DETALLEVENTA_GET_VENTA, DETALLEVENTA_POST, FACTURA_GET_NUM, Footer, NavPrincipal, PRODUCTO_GET, TOTAL_GET_SUMA, VENTA_POST } from '../../constants/constants';
 import { TablaProducto, TablaUnProducto, ModalTicket } from "../../constants/constants"
 
-import productos from '../../data/productos';
+import productosData from '../../data/productos';
 
 
 
@@ -13,6 +13,9 @@ export function Ventas() {
 
 
     const [productosFiltrados, setProductosFiltrados] = useState([])
+
+    const [productos, setProductos] = useState(productosData)
+
     const [idCarrito, setIdCarrito] = useState(0)
 
     const [productoPorVenta, setProductoPorVenta] = useState([])
@@ -21,8 +24,8 @@ export function Ventas() {
     const [ultimoSaldo, setUltimoSaldo] = useState(0)
 
 
-    const [categoria, setCategoria] = useState([])
-    const [categoriasArray, setCategoriasArray] = useState([])
+    const [detalleVenta, setDetalleVenta] = useState([])
+    const [nuevaVenta, setNuevaVenta] = useState([])
 
     const [numFactura, setNumFactrura] = useState(0)
     const [total, setTotal] = useState(0)
@@ -45,6 +48,8 @@ export function Ventas() {
     const [validarTipoEntrega, setValidarTipoEntrega] = useState(false);
     const [validarIdentificacion, setValidarIdentificacion] = useState(false);
     const [validarFormaPago, setValidarFormaPago] = useState(false);
+
+    const [modalVisible, setModalVisible] = useState(true);
     // aca termina el modal 
 
     const [carrito, setCarrito] =useState([])
@@ -102,6 +107,11 @@ export function Ventas() {
         }
     }
 
+    const closeModal = () => {
+        setModalVisible(false);
+        setCarrito([])
+      };
+
     const handleFinalizarVenta = () => {
 
         if (carrito.length > 0 && validarVenta === true) {
@@ -122,40 +132,34 @@ export function Ventas() {
             const fechaHoraFormateada = `${anio}-${mesFormateado}-${diaFormateado} ${horasFormateadas}:${minutosFormateados}`;
 
 
-            axios.post(`http://localhost:8000/caja/registrar`,
-                {
-                    fechaYHora: fechaHoraFormateada.toString(),
-                    concepto: "Venta nro: " + numFactura,
-                    ingresos: total,
-                    egresos: 0,
-                    saldo: ultimoSaldo + total,
-                    estado: "Abierta"
+            setNuevaVenta({
+                fechaYHora: fechaHoraFormateada.toString(),
+                concepto: "Venta nro: " + numFactura,
+                ingresos: total,
+                egresos: 0,
+                saldo: ultimoSaldo + total,
+                estado: "Abierta"
 
-                }).then((resp) => {
-
-
-                    alert("se realizo la operacion")
-                }
-                )
+            })
 
 
-            axios.post(VENTA_POST,
-                {
-                    montoTotal: total,
-                    fechaYHora: fechaHoraFormateada,
-                    formaDePago: formaDePago,
-                    tipoEntrega: tipoEntrega,
-                    identificacionComprador: identificacionCliente
+        setDetalleVenta ({
+                montoTotal: total,
+                fechaYHora: fechaHoraFormateada,
+                formaDePago: formaDePago,
+                tipoEntrega: tipoEntrega,
+                identificacionComprador: identificacionCliente
+            })
 
-                }).then((resp) => {
                     getNumFactura()
                     resetItems()
                     setTotal(null)
                     setMostrarModal(true)
+                    setModalVisible(true)
                     alert("se realizo la venta")
                     setValidarVenta(false)
-                }
-                )
+                
+                    
         } else (alert("Faltan ingresar datos"))
     }
 
@@ -305,7 +309,7 @@ export function Ventas() {
             </div>
 
             {/* Esta es la parte del modal */}
-            {mostrarModal && <ModalTicket dato={numFactura} abrir={true} />}
+            {mostrarModal && <ModalTicket closeModal={closeModal} nuevaVenta={nuevaVenta} carrito={carrito} detalleVenta={detalleVenta} dato={numFactura} abrir={true} modalVisible={modalVisible} />}
             <Footer />
         </div>
     )

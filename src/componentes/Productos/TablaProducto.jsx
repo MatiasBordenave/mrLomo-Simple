@@ -26,7 +26,7 @@ export function TablaProducto({ productos, handleAgregar, mostrarTodos }) {
 
                                 return(
                                     <li className='liTitulo' key={index}>                                    
-                                                <p>{productos.codProducto}</p>
+                                                <p>{productos.id}</p>
                                                 <p className='pTitulo'>{productos.nombre}</p> 
                                                 <button onClick={() => handleAgregar(productos.id)}>Agregar</button>
                                     </li>

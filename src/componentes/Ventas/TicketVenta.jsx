@@ -3,26 +3,26 @@ import Axios from 'axios'
 import "../../styles/ticket.css"
 
 
-export function TicketVenta(props){
- console.log(props)
+export function TicketVenta({ detalleVenta, carrito }){
 
-    const [tickets, setTickets] = useState([])
-    const [unTicket, setUnTicket] = useState([])
 
-    const mostrarTickets = () => {
-        Axios.get('http://localhost:8000/ticket')
-        .then((response) => {
-            setTickets(response.data)
-        })
-    }
-    console.log(tickets)
+    // const [tickets, setTickets] = useState([])
+    // const [unTicket, setUnTicket] = useState([])
 
-    const mostrarUnTicket = (Id) => {
-        Axios.get("http://localhost:8000/ticket/" + Id)
-            .then((response) => {
-                setUnTicket(response.data)
-        })
-    }
+    // const mostrarTickets = () => {
+    //     Axios.get('http://localhost:8000/ticket')
+    //     .then((response) => {
+    //         setTickets(response.data)
+    //     })
+    // }
+    // console.log(tickets)
+
+    // const mostrarUnTicket = (Id) => {
+    //     Axios.get("http://localhost:8000/ticket/" + Id)
+    //         .then((response) => {
+    //             setUnTicket(response.data)
+    //     })
+    // }
 
     const handleImprimir = () => {
         window.print();
@@ -31,15 +31,15 @@ export function TicketVenta(props){
     console.log()
 
     useEffect(() => {
-        mostrarTickets();
-        mostrarUnTicket(props.dato);      
+        // mostrarTickets();
+        // mostrarUnTicket(props.dato);      
     }, [])
     
     return(
         <>     
-            {unTicket.length > 0 ? (
+            {carrito.length > 0 ? (
             <div className='ticket'>
-                <h2 id='tituloTicket'>Ticket N° {unTicket[0].idVenta}</h2>
+                <h2 id='tituloTicket'>Ticket N° {carrito[0].idVenta}</h2>
                 <table className='tablaTicket'>
                     <thead className='parteArriba'>
                         <tr>
@@ -51,10 +51,10 @@ export function TicketVenta(props){
                     </thead>
                     <tbody className='cuerpoArriba'>
                         <tr>
-                            <td>{unTicket[0].identificacionComprador}</td>
-                            <td>{unTicket[0].formaDePago}</td>
-                            <td>{unTicket[0].tipoEntrega}</td>
-                            <td>{unTicket[0].fechaYHora.slice(0, 10)}</td>
+                            <td>{detalleVenta.identificacionComprador}</td>
+                            <td>{detalleVenta.formaDePago}</td>
+                            <td>{detalleVenta.tipoEntrega}</td>
+                            <td>{detalleVenta.fechaYHora.slice(0, 10)}</td>
                         </tr>
                     </tbody>
                     
@@ -67,7 +67,7 @@ export function TicketVenta(props){
                     </tr>
                     </thead>
                     <tbody className='cuerpoMedio'>
-                    {unTicket.map((ticket, index) => (
+                    {carrito.map((ticket, index) => (
                         <tr key={index}>       
                         <td>{ticket.nombre}</td>
                         <td>{ticket.cantidad}</td>
@@ -84,7 +84,7 @@ export function TicketVenta(props){
                     </thead>    
                     <tbody className='cuerpoBajo'>
                         <tr>
-                            <td colSpan="4">{unTicket[0].montoTotal}</td>
+                            <td colSpan="4">{carrito[0].montoTotal}</td>
                         </tr>
                     </tbody>
 

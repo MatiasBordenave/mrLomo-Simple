@@ -6,11 +6,12 @@ import { Footer } from "../../constants/constants";
 import { PRODUCTO_POST, PRODUCTO_GET } from "../../constants/constants";
 import NavPrincipal from "../../componentes/NavPrincipal/NavPrincipal";
 import { Alert } from "react-bootstrap";
+import productosData from '../../data/productos';
 
 
 export function Producto() {
 
-  const [productos, setProductos] = useState([]);
+  const [productos, setProductos] = useState(productosData);
 
   //producto nuevo
   const [codigo, setCodigo] = useState();
@@ -46,38 +47,36 @@ export function Producto() {
 
 
   const getProductos = () => {
-    axios.get(PRODUCTO_GET)
-      .then((resp) => {
-        setProductos(resp.data)
-      })
+    
+        setProductos(productos)
+      
 
   }
 
   const deleteProducto = (id) => {
-    axios.delete(`https://fake-api-sangucheria.vercel.app/productos/` + id)
-      .then((resp) => {
-        getProductos();
-      })
+    
+    setProductos(productos => productos.filter(productos => productos.id !== id));
 
   }
+
   const handleGuardarProd = () => {
-    console.log(productoNuevo, ", ", descripcion, ", ", precio, ", ")
 
     if (productoNuevo.length > 0 && descripcion.length > 0 && precio > 0) {
-      axios.post(PRODUCTO_POST, {
+      const nuevoProducto = {
         codProducto: codigo,
         nombre: productoNuevo,
         descripcion: descripcion,
         precio: precio,
         stock: stock,
         stockeable: stockeable
-      }).then((resp) => {
+      }
+      setProductos([ ...productos, nuevoProducto])
         setMostrarAgregarProd(!mostrarAgregarProd)
         alert("Se agrego un Producto")
         getProductos()
         resetItems()
-      })
-    } else {
+      }
+     else {
       alert("Ingrese los datos del producto")
     }
   }
@@ -104,10 +103,8 @@ export function Producto() {
 
      console.log(idProducto)
     if (idProducto.length > 0) {
-      axios.get(`https://fake-api-sangucheria.vercel.app/productos/` + idProducto)
-        .then((resp) => {
-          setUnProducto(resp.data)
-        })
+    
+          setUnProducto(productos.filter(productos => productos.id == id));
 
     }
   }
@@ -235,7 +232,6 @@ export function Producto() {
                         <th>Descripcion</th>
                         <th>Precio</th>
                         <th>Stock</th>
-                        <th>Stockeable</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                       </tr>
@@ -245,14 +241,13 @@ export function Producto() {
                         productos.map((producto) => {
                           return (
                             <tr
-                              className='' key={producto.codProducto} >
+                              className='' key={producto.id} >
 
-                              <td >{producto.codProducto}</td>
+                              <td >{producto.id}</td>
                               <td>{producto.nombre}</td>
                               <td>{producto.descripcion}</td>
                               <td>{producto.precio}</td>
                               <td>{producto.stock}</td>
-                              <td>{producto.stockeable}</td>
 
 
 

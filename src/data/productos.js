@@ -1,11 +1,12 @@
 
-    const productos = [
+    const productosData = [
       {
         "id": 1,
         "nombre": "Hamburguesa Clásica",
         "descripcion": "Pan artesanal, carne de res, lechuga, tomate, queso y mayonesa.",
         "precio": 1200,
         "categoria": "Comida",
+        "stockeable": false,
         "stock": 20
       },
       {
@@ -14,6 +15,7 @@
         "descripcion": "Pan francés, milanesa de pollo, queso, tomate y lechuga.",
         "precio": 1300,
         "categoria": "Comida",
+        "stockeable": false,
         "stock": 15
       },
       {
@@ -22,6 +24,7 @@
         "descripcion": "Botella de gaseosa de 500ml, varios sabores disponibles.",
         "precio": 600,
         "categoria": "Bebida",
+        "stockeable": true,
         "stock": 50
       },
       {
@@ -30,6 +33,7 @@
         "descripcion": "Cerveza artesanal rubia o negra, en botella de 330ml.",
         "precio": 900,
         "categoria": "Bebida",
+        "stockeable": false,
         "stock": 30
       },
       {
@@ -38,6 +42,7 @@
         "descripcion": "Porción mediana de papas fritas crocantes.",
         "precio": 700,
         "categoria": "Acompañamiento",
+        "stockeable": false,
         "stock": 25
       },
       {
@@ -46,6 +51,7 @@
         "descripcion": "Pan integral, medallón de lentejas, palta, rúcula y tomate.",
         "precio": 1400,
         "categoria": "Comida",
+        "stockeable": false,
         "stock": 10
       },
       {
@@ -54,6 +60,7 @@
         "descripcion": "Botella de agua mineral natural o con gas.",
         "precio": 500,
         "categoria": "Bebida",
+        "stockeable": true,
         "stock": 40
       },
       {
@@ -62,8 +69,9 @@
         "descripcion": "Pan francés, lomito, queso, tomate, lechuga y huevo.",
         "precio": 1500,
         "categoria": "Comida",
+        "stockeable": false,
         "stock": 12
       }
     ]
 
-export default productos
+export default productosData
