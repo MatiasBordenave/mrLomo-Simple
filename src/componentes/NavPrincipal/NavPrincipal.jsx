@@ -34,11 +34,11 @@ export function NavPrincipal() {
                     >
                   Nueva Venta
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/VentasRealizadas"
+                {/* <NavDropdown.Item href="/VentasRealizadas"
                 className={activeLink === '/VentasRealizadas' ? 'active' : ''}
                  >
                   Ventas Realizadas
-                </NavDropdown.Item>
+                </NavDropdown.Item> */}
               </NavDropdown>
               <Nav.Link href="/ListadoVentas"
               
