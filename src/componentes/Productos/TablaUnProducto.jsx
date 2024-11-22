@@ -37,12 +37,7 @@ export function TablaUnProducto({ idProducto, handleVolver, handleAgregarCarrito
       }
       
       
-    const getAgregados = () =>{
-      axios.get(`http://localhost:8000/detalleVenta/agregados`)
-      .then((resp)=>{
-        setAgregados(resp.data)
-      })  
-    }
+  
     
     useEffect(() => {   
       handleUnProducto()

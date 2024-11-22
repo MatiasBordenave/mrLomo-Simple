@@ -64,25 +64,10 @@ export function Ventas() {
         setMostrarComponente(!mostrarComponente)
     }
 
-    // const getProductos = () => {
-
-    //     axios.get(PRODUCTO_GET)
-    //         .then((resp) => {
-    //             setProductos(resp.data)
-    //         })
-    // }
-
-    const getNumFactura = () => {
-        // axios.get(FACTURA_GET_NUM)
-        //     .then((resp) => {
-        //         setNumFactrura(resp.data.length + 1)
-        //     })
-    }
 
 
     const handleQuitar = (id) => {
          
-            // Filtrar el carrito para eliminar el producto con el cod_Producto correspondiente
             setCarrito(prevCarrito => prevCarrito.filter(producto => producto.id !== id));
         
         
@@ -163,12 +148,7 @@ export function Ventas() {
         } else (alert("Faltan ingresar datos"))
     }
 
-    const getProductoPorVenta = () => {
-        // axios.get(DETALLEVENTA_GET_VENTA)
-        //     .then((resp) => {
-        //         setProductoPorVenta(resp.data)
-        //     })
-    }
+
     const handleAgregarCarrito = (unProductoArray, contador, descripcion, observacion) => {
         
         if (contador > 0) {
@@ -216,22 +196,10 @@ export function Ventas() {
 
     
     useEffect(() => {
-        // getProductos()
-        getNumFactura()
-        // getTotal()
-        getProductoPorVenta()
         handleValidarVenta()
-        // getDetalleVenta()
-        // getMostrarUltimoSaldo()
-        // const productoFiltradosPorVenta = obtenerProductosPorVenta(numFactura); // Aquí obtienes los productos
-        // setProductosFiltrados(productoFiltradosPorVenta); // Actualizas el estado con los productos obtenidos
     }, [idProd, total, mostrarTodos, validarFormaPago, validarIdentificacion, validarTipoEntrega, validarVenta, numFactura, carrito])
 
     useEffect(() => {
-        if (carrito.length > 0) {
-            // Actualizar numFactura solo cuando el carrito cambie
-            getNumFactura(); // O realiza la lógica necesaria aquí para actualizar la factura
-        }
     }, [carrito]); // Dependencia en carrito
     
 
