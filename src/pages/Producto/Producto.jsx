@@ -160,7 +160,6 @@ export function Producto() {
     // Actualizar la lista de productos
     setProductos([...productos, nuevoProducto]);
     setMostrarAgregarProd(!mostrarAgregarProd);
-    alert("Se agregó un producto nuevo.");
     resetItems();
   };
   
@@ -233,8 +232,7 @@ export function Producto() {
       )
     );
   
-    // Notificar al usuario y cerrar el formulario
-    alert("Producto actualizado con éxito.");
+
     setMostrarEditar(false);
   }
   

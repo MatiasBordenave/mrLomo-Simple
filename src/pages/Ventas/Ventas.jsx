@@ -213,7 +213,6 @@ export function Ventas() {
                     setTotal(null)
                     setMostrarModal(true)
                     setModalVisible(true)
-                    alert("se realizo la venta")
                     setValidarVenta(false)
                 
                     
