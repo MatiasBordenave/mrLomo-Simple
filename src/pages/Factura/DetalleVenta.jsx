@@ -1,22 +1,11 @@
-import  { useEffect, useState } from "react";
-import Table from 'react-bootstrap/Table';
-import axios from "axios";
-import '../../styles/factura.css';
+import { useEffect } from "react";
+import Table from "react-bootstrap/Table";
+import "../../styles/factura.css";
 
-export const DetalleVenta = ({ idVenta }) => {
-  const [detalleVenta, setDetalleVenta] = useState([]);
-
-  const mostrarDetalleVenta = () => {
-    axios
-      .get("http://localhost:8000/detalleVenta/ventaLEti/" + idVenta)
-      .then((resp) => {
-        setDetalleVenta(resp.data);
-      });
-  };
-
-
-
-  useEffect(() => mostrarDetalleVenta(), [idVenta]);
+export const DetalleVenta = ({ detalleVenta }) => {
+  useEffect(() => {
+    console.log(detalleVenta);
+  }, [detalleVenta]);
 
   return (
     <div className="container1">
@@ -24,23 +13,21 @@ export const DetalleVenta = ({ idVenta }) => {
         <thead>
           <tr>
             <th>Nro Factura:</th>
-            <th>Código de Producto:</th>
             <th>Nombre Producto:</th>
-            <th>Categoria Producto:</th>
             <th>Cantidad:</th>
+            <th>Precio Unitario:</th>
             <th>Subtotal:</th>
           </tr>
         </thead>
 
         <tbody>
-          {detalleVenta.map((detalleVenta, index) => (
+          {detalleVenta?.productos.map((producto, index) => (
             <tr key={index}>
-              <td>{detalleVenta.NumeroDeVenta}</td>
-              <td>{detalleVenta.CodigoDeProducto}</td>
-              <td>{detalleVenta.NombreDeProducto}</td>
-              <td>{detalleVenta.CategoriaDeProducto}</td>
-              <td>{detalleVenta.Cantidad}</td>
-              <td>{detalleVenta.Subtotal}</td>
+              <td>{detalleVenta.numeroVenta}</td>
+              <td>{producto.nombre}</td>
+              <td>{producto.cantidad}</td>
+              <td>${producto.precio}</td>
+              <td>${producto.cantidad * producto.precio}</td>
             </tr>
           ))}
         </tbody>

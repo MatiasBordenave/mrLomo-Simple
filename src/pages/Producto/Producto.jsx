@@ -135,26 +135,35 @@ export function Producto() {
   }
 
   const handleGuardarProd = () => {
-
-    if (productoNuevo.length > 0 && descripcion.length > 0 && precio > 0) {
-      const nuevoProducto = {
-        codProducto: codigo,
-        nombre: productoNuevo,
-        descripcion: descripcion,
-        precio: precio,
-        stock: stock,
-        stockeable: stockeable
-      }
-      setProductos([ ...productos, nuevoProducto])
-        setMostrarAgregarProd(!mostrarAgregarProd)
-        alert("Se agrego un Producto")
-        getProductos()
-        resetItems()
-      }
-     else {
-      alert("Ingrese los datos del producto")
+    // Validar campos obligatorios
+    if (!productoNuevo || !descripcion || precio <= 0 || isNaN(codigo) || codigo <= 0) {
+      alert("Por favor completa todos los campos correctamente.");
+      return;
     }
-  }
+  
+    // Validar stock si es stockeable
+    if (stockeable === "SI" && (isNaN(stock) || stock < 0)) {
+      alert("Por favor ingresa un stock válido.");
+      return;
+    }
+  
+    // Crear el nuevo producto
+    const nuevoProducto = {
+      id: codigo,
+      nombre: productoNuevo,
+      descripcion: descripcion,
+      precio: parseFloat(precio.toFixed(2)), // Formato adecuado para precio
+      stock: stockeable === "SI" ? stock : 0,
+      stockeable: stockeable,
+    };
+  
+    // Actualizar la lista de productos
+    setProductos([...productos, nuevoProducto]);
+    setMostrarAgregarProd(!mostrarAgregarProd);
+    alert("Se agregó un producto nuevo.");
+    resetItems();
+  };
+  
 
   const onClickNuevo = () => {
     setMostrarAgregarProd(!mostrarAgregarProd)
@@ -179,9 +188,8 @@ export function Producto() {
      console.log(idProducto)
     if (idProducto.length > 0) {
     
-          setUnProducto(productos.filter(productos => productos.id == id));
-
-    }
+          setUnProducto(productos.filter(productos => productos.id === idProducto));
+        }
   }
 
 
@@ -190,27 +198,46 @@ export function Producto() {
   }
 
   function handleGuardarEditar() {
-    const url = `https://fake-api-sangucheria.vercel.app/productos/` + idProducto;
-    let newObj = {
-      nombre: nombre,
-      descripcion: descripcion1,
-      precio: precio,
-      stock: contador,
-      stockeable: stockeableEdit
+    // Validaciones de los campos obligatorios
+    if (!nombre.trim() || !descripcion1.trim() || isNaN(precio) || precio <= 0) {
+      alert("Por favor completa todos los campos correctamente.");
+      return;
     }
-
-    if (nombre.length > 0 && descripcion1.length > 0 && precio > 0 && validacionStockeable1 == true) {
-
-      axios.patch(url, newObj).then((data) => {
-        alert("Se ha realizado la ACTUALIZACION")
-        getProductos();
-        setMostrarEditar(false);
-      })
+  
+    // Validación del campo stockeable
+    if (stockeableEdit === "default") {
+      alert("Por favor selecciona si el producto es stockeable o no.");
+      return;
     }
-    else {
-      alert("Ingrese los datos faltantes")
+  
+    // Validación de stock en caso de productos stockeables
+    if (stockeableEdit === "SI" && (isNaN(contador) || contador < 0)) {
+      alert("Por favor ingresa un stock válido.");
+      return;
     }
+  
+    // Crear el objeto con los datos editados
+    const updatedProduct = {
+      id: idProducto,
+      nombre: nombre.trim(),
+      descripcion: descripcion1.trim(),
+      precio: parseFloat(precio),
+      stock: stockeableEdit === "SI" ? parseInt(contador, 10) : 0,
+      stockeable: stockeableEdit,
+    };
+  
+    // Actualizar el producto en el estado
+    setProductos((prevProductos) =>
+      prevProductos.map((producto) =>
+        producto.id === idProducto ? updatedProduct : producto
+      )
+    );
+  
+    // Notificar al usuario y cerrar el formulario
+    alert("Producto actualizado con éxito.");
+    setMostrarEditar(false);
   }
+  
 
 
   useEffect(() => {
@@ -257,17 +284,26 @@ export function Producto() {
                       
                          (
                           <tr>
-                            <td>{codigoProd}</td>
+                            <td>{idProducto}</td>
                             <td><input type="text" onChange={(e) => setNombre(e.target.value)} value={nombre} /></td>
                             <td><input value={descripcion1} onChange={(e) => setDescripcion1(e.target.value)} type="text" /></td>
                             <td><input type="number" value={precio} onChange={(e) => setPrecio(e.target.value)} /></td>
                             <td>
-                              <select name="" id="" onChange={(e) => { setStockeableEdit(e.target.value), setValidacionStockeable1(true) }}>
-                                <option value="NO"></option>
+                              <select
+                                name=""
+                                id=""
+                                value={stockeableEdit} // Mantener el estado sincronizado
+                                onChange={(e) => {
+                                  setStockeableEdit(e.target.value);
+                                  setValidacionStockeable1(e.target.value === "SI" || e.target.value === "NO");
+                                }}
+                              >
+                                <option value="default">Seleccionar</option>
                                 <option value="SI">SI</option>
                                 <option value="NO">NO</option>
                               </select>
                             </td>
+
                             {
                               stockeableEdit == "SI" &&
                               <td> <input onChange={(e) => setContador(e.target.value)} value={contador} type="number" /></td>
@@ -363,31 +399,74 @@ export function Producto() {
               // producto nuevo
               (
                 <div>
-                  <h3>Producto Nuevo</h3>
-                  <p>Codigo: <input type="number" autoFocus placeholder="Codigo" onChange={(e) => setCodigo(e.target.value)} /></p>
-                  <p>Nombre: <input type="text" placeholder="Producto Nuevo" onChange={(e) => setProductoNuevo(e.target.value)} /></p>
-                  <p>Descripcion: <input type="text" placeholder="Descripcion" onChange={(e) => setDescripcion(e.target.value)} /></p>
-                  <p>Precio: <input type="number" placeholder="Precio" onChange={(e) => setPrecio(e.target.value)} /></p>
-
-
-                  <p>Stock Activo:
-                    <select name="" id="" onChange={(e) => { setStockeable(e.target.value) }}>
-                      <option value="NO"></option>
-                      <option value="SI">SI</option>
-                      <option value="NO" onClick={() => setStock(0)}>NO</option>
-                    </select>
+                <h3>Producto Nuevo</h3>
+                <p>Codigo: 
+                  <input 
+                    type="number" 
+                    autoFocus 
+                    placeholder="Codigo" 
+                    onChange={(e) => setCodigo(parseInt(e.target.value, 10) || "")} // Eliminar ceros iniciales
+                  />
+                </p>
+                <p>Nombre: 
+                  <input 
+                    type="text" 
+                    placeholder="Producto Nuevo" 
+                    onChange={(e) => setProductoNuevo(e.target.value.trim())} // Quitar espacios innecesarios
+                  />
+                </p>
+                <p>Descripcion: 
+                  <input 
+                    type="text" 
+                    placeholder="Descripcion" 
+                    onChange={(e) => setDescripcion(e.target.value.trim())}
+                  />
+                </p>
+                <p>Precio: 
+                  <input 
+                    type="number" 
+                    placeholder="Precio" 
+                    onChange={(e) => setPrecio(parseFloat(e.target.value) || 0)} // Convertir a número válido
+                  />
+                </p>
+              
+                <p>Stock Activo:
+                  <select 
+                    name="" 
+                    id="" 
+                    onChange={(e) => { 
+                      setStockeable(e.target.value); 
+                      if (e.target.value === "NO") setStock(0); // Si no es stockeable, stock = 0
+                    }}
+                  >
+                    <option value="default">Seleccionar</option>
+                    <option value="SI">SI</option>
+                    <option value="NO">NO</option>
+                  </select>
+                </p>
+              
+                {stockeable === "SI" && (
+                  <p>Stock: 
+                    <input 
+                      type="number" 
+                      placeholder="Stock" 
+                      defaultValue={0} 
+                      onChange={(e) => setStock(parseInt(e.target.value, 10) || 0)} // Eliminar ceros iniciales
+                    />
                   </p>
-                  {
-                    stockeable == "SI" &&
-                    <p>Stock: <input type="number" placeholder="Stock" defaultValue={0} onChange={(e) => setStock(e.target.value)} /></p>
-                  }
-
-
-
-                  <button onClick={handleGuardarProd}>Guardar</button>
-
-                  <button onClick={() => { setMostrarAgregarProd(!mostrarAgregarProd), resetItems() }}>Cancelar</button>
-                </div>
+                )}
+              
+                <button onClick={handleGuardarProd}>Guardar</button>
+                <button 
+                  onClick={() => { 
+                    setMostrarAgregarProd(!mostrarAgregarProd); 
+                    resetItems(); 
+                  }}
+                >
+                  Cancelar
+                </button>
+              </div>
+              
               )
 
             }

@@ -209,7 +209,6 @@ export function Ventas() {
                 identificacionComprador: identificacionCliente
             })
 
-                    getNumFactura()
                     resetItems()
                     setTotal(null)
                     setMostrarModal(true)

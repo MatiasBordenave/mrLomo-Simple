@@ -1,9 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import "../../styles/navPstyle.css";
-import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { useEffect, useState } from "react";
 
 export function NavPrincipal() {
@@ -18,22 +16,19 @@ export function NavPrincipal() {
     <>
       <div className="bodyNav">
         <Navbar expand="lg" className="mainNav">
-          <Navbar.Collapse>
+          {/* Botón de hamburguesa */}
+          <Navbar.Toggle aria-controls="basic-navbar-nav" className="hamburger-button">
+            <span className="navbar-toggler-icon"></span>
+          </Navbar.Toggle>
+          <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="m-auto">
-              <NavDropdown
-                title="Ventas"
-                id="basic-nav-dropdown"
-                className={activeLink === '/Ventas' || activeLink === '/VentasRealizadas' ? 'active' : ''}
-              >
-                <NavDropdown.Item as={Link} to="/Ventas" className={activeLink === '/Ventas' ? 'active' : ''}>
-                  Nueva Venta
-                </NavDropdown.Item>
-                {/* 
-                <NavDropdown.Item as={Link} to="/VentasRealizadas" className={activeLink === '/VentasRealizadas' ? 'active' : ''}>
-                  Ventas Realizadas
-                </NavDropdown.Item> 
-                */}
-              </NavDropdown>
+              {/* Enlace Home */}
+              <Nav.Link as={Link} to="/" className={activeLink === '/' ? 'active' : ''}>
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to="/Ventas" className={activeLink === '/Ventas' ? 'active' : ''}>
+                Nueva Venta
+              </Nav.Link>
               <Nav.Link as={Link} to="/ListadoVentas" className={activeLink === '/ListadoVentas' ? 'active' : ''}>
                 Facturas Realizadas
               </Nav.Link>
@@ -49,3 +44,4 @@ export function NavPrincipal() {
 }
 
 export default NavPrincipal;
+
