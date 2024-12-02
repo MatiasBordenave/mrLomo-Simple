@@ -4,7 +4,6 @@ import "../../styles/factura.css";
 
 export const DetalleVenta = ({ detalleVenta }) => {
   useEffect(() => {
-    console.log(detalleVenta);
   }, [detalleVenta]);
 
   return (

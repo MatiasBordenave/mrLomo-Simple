@@ -35,7 +35,82 @@ const ventas = [
       { nombre: "Gaseosa 500ml", cantidad: 2, precio: 600 },
     ],
   },
+  {
+    id: 4,
+    fechaYHora: "2024-11-25 12:45",
+    numeroVenta: "V004",
+    importeTotal: "$4500",
+    productos: [
+      { nombre: "Hamburguesa Vegana", cantidad: 2, precio: 1400 },
+      { nombre: "Agua Mineral 500ml", cantidad: 2, precio: 500 },
+      { nombre: "Papas Fritas", cantidad: 1, precio: 700 },
+    ],
+  },
+  {
+    id: 5,
+    fechaYHora: "2024-11-25 18:30",
+    numeroVenta: "V005",
+    importeTotal: "$5400",
+    productos: [
+      { nombre: "Milanesa Completa", cantidad: 2, precio: 1300 },
+      { nombre: "Cerveza Artesanal 330ml", cantidad: 3, precio: 900 },
+    ],
+  },
+  {
+    id: 6,
+    fechaYHora: "2024-11-26 14:00",
+    numeroVenta: "V006",
+    importeTotal: "$3600",
+    productos: [
+      { nombre: "Hamburguesa Clásica", cantidad: 1, precio: 1200 },
+      { nombre: "Sándwich de Lomito", cantidad: 1, precio: 1500 },
+      { nombre: "Gaseosa 500ml", cantidad: 2, precio: 600 },
+    ],
+  },
+  {
+    id: 7,
+    fechaYHora: "2024-11-27 20:15",
+    numeroVenta: "V007",
+    importeTotal: "$4200",
+    productos: [
+      { nombre: "Hamburguesa Vegana", cantidad: 1, precio: 1400 },
+      { nombre: "Papas Fritas", cantidad: 2, precio: 700 },
+      { nombre: "Cerveza Artesanal 330ml", cantidad: 2, precio: 900 },
+    ],
+  },
+  {
+    id: 8,
+    fechaYHora: "2024-11-28 09:45",
+    numeroVenta: "V008",
+    importeTotal: "$2100",
+    productos: [
+      { nombre: "Agua Mineral 500ml", cantidad: 3, precio: 500 },
+      { nombre: "Papas Fritas", cantidad: 1, precio: 700 },
+    ],
+  },
+  {
+    id: 9,
+    fechaYHora: "2024-11-28 13:30",
+    numeroVenta: "V009",
+    importeTotal: "$2900",
+    productos: [
+      { nombre: "Hamburguesa Clásica", cantidad: 1, precio: 1200 },
+      { nombre: "Cerveza Artesanal 330ml", cantidad: 2, precio: 900 },
+    ],
+  },
+  {
+    id: 10,
+    fechaYHora: "2024-11-29 16:00",
+    numeroVenta: "V010",
+    importeTotal: "$5200",
+    productos: [
+      { nombre: "Milanesa Completa", cantidad: 2, precio: 1300 },
+      { nombre: "Hamburguesa Clásica", cantidad: 1, precio: 1200 },
+      { nombre: "Gaseosa 500ml", cantidad: 2, precio: 600 },
+    ],
+  },
 ];
+
 
 export const ListadoVentas = () => {
   const [detalleVenta, setDetalleVenta] = useState(null); // Estado para la venta seleccionada
@@ -58,7 +133,7 @@ export const ListadoVentas = () => {
           </div>
           {!detalleVenta ? (
             <div className="table-responsive">
-              <Table striped bordered hover>
+              <Table striped bordered hover className="bg-white">
                 <thead>
                   <tr>
                     <th>Fecha y Hora</th>
