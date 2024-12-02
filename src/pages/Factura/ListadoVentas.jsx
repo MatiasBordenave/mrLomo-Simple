@@ -18,7 +18,7 @@ const ventas = [
     id: 2,
     fechaYHora: "2024-11-23 16:00",
     numeroVenta: "V002",
-    importeTotal: "$3100",
+    importeTotal: "$3800",
     productos: [
       { nombre: "Milanesa Completa", cantidad: 1, precio: 1300 },
       { nombre: "Papas Fritas", cantidad: 1, precio: 700 },
@@ -50,7 +50,7 @@ const ventas = [
     id: 5,
     fechaYHora: "2024-11-25 18:30",
     numeroVenta: "V005",
-    importeTotal: "$5400",
+    importeTotal: "$5300",
     productos: [
       { nombre: "Milanesa Completa", cantidad: 2, precio: 1300 },
       { nombre: "Cerveza Artesanal 330ml", cantidad: 3, precio: 900 },
@@ -60,7 +60,7 @@ const ventas = [
     id: 6,
     fechaYHora: "2024-11-26 14:00",
     numeroVenta: "V006",
-    importeTotal: "$3600",
+    importeTotal: "$3900",
     productos: [
       { nombre: "Hamburguesa Clásica", cantidad: 1, precio: 1200 },
       { nombre: "Sándwich de Lomito", cantidad: 1, precio: 1500 },
@@ -71,7 +71,7 @@ const ventas = [
     id: 7,
     fechaYHora: "2024-11-27 20:15",
     numeroVenta: "V007",
-    importeTotal: "$4200",
+    importeTotal: "$3200",
     productos: [
       { nombre: "Hamburguesa Vegana", cantidad: 1, precio: 1400 },
       { nombre: "Papas Fritas", cantidad: 2, precio: 700 },
@@ -82,7 +82,7 @@ const ventas = [
     id: 8,
     fechaYHora: "2024-11-28 09:45",
     numeroVenta: "V008",
-    importeTotal: "$2100",
+    importeTotal: "$2200",
     productos: [
       { nombre: "Agua Mineral 500ml", cantidad: 3, precio: 500 },
       { nombre: "Papas Fritas", cantidad: 1, precio: 700 },
@@ -92,7 +92,7 @@ const ventas = [
     id: 9,
     fechaYHora: "2024-11-28 13:30",
     numeroVenta: "V009",
-    importeTotal: "$2900",
+    importeTotal: "$3000",
     productos: [
       { nombre: "Hamburguesa Clásica", cantidad: 1, precio: 1200 },
       { nombre: "Cerveza Artesanal 330ml", cantidad: 2, precio: 900 },
@@ -102,7 +102,7 @@ const ventas = [
     id: 10,
     fechaYHora: "2024-11-29 16:00",
     numeroVenta: "V010",
-    importeTotal: "$5200",
+    importeTotal: "$5000",
     productos: [
       { nombre: "Milanesa Completa", cantidad: 2, precio: 1300 },
       { nombre: "Hamburguesa Clásica", cantidad: 1, precio: 1200 },

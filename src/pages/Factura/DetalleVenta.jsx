@@ -3,8 +3,13 @@ import Table from "react-bootstrap/Table";
 import "../../styles/factura.css";
 
 export const DetalleVenta = ({ detalleVenta }) => {
-  useEffect(() => {
-  }, [detalleVenta]);
+  useEffect(() => {}, [detalleVenta]);
+
+  // Calcular el total de la venta
+  const totalVenta = detalleVenta?.productos.reduce(
+    (acc, producto) => acc + producto.cantidad * producto.precio,
+    0
+  );
 
   return (
     <div className="container1">
@@ -30,9 +35,20 @@ export const DetalleVenta = ({ detalleVenta }) => {
             </tr>
           ))}
         </tbody>
+
+        {/* Agregar un pie de tabla para el total */}
+        <tfoot>
+          <tr>
+            <td colSpan="4" style={{ textAlign: "right", fontWeight: "bold" }}>
+              Total:
+            </td>
+            <td style={{ fontWeight: "bold" }}>${totalVenta}</td>
+          </tr>
+        </tfoot>
       </Table>
     </div>
   );
 };
 
 export default DetalleVenta;
+
