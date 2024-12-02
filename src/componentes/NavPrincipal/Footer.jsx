@@ -1,35 +1,55 @@
 import React from 'react';
 import "../../styles/footer.css";
 
+import { FaLinkedin, FaGithub, FaWhatsapp } from 'react-icons/fa'; // Importa los iconos
+
 export const Footer = () => {
   return (
-    <div className='footer'>
-      <div className=''>
+    <div className="footer">
+      <div>
         {/* Nombre a la izquierda */}
-        <div className='footer_copyR'>
+        <div className="footer_copyR">
           <p>Matias Bordenave</p>
         </div>
 
         {/* Copyright en el centro */}
-        <div className='footer_copyR center'>
+        <div className="footer_copyR center">
           <p>© Copyright 2023. Made by Matias Bordenave.</p>
         </div>
 
         {/* Redes sociales a la derecha */}
-        <div className='footer_media'>
-          <a href="https://www.linkedin.com/in/matias-bordenave-221986251/" target='_blank'>
-            <img src="https://d33wubrfki0l68.cloudfront.net/7f29579dde49e02480372aa49f7189c5536b0118/34b92/assets/png/linkedin-ico.png" alt="LinkedIn" />
+        <div className="bg-darkk justify-content-end d-flex footer_media">
+          <a 
+            className="bg-darkk" 
+            href="https://www.linkedin.com/in/matias-bordenave-221986251/" 
+            target="_blank" 
+            aria-label="LinkedIn Profile" 
+            rel="noopener noreferrer"
+          >
+            <FaLinkedin className="social-icons-fclk-footer social-icon-footer" />
           </a>
-          <a href="https://github.com/MatuqE" target='_blank'>
-            <img src="https://d33wubrfki0l68.cloudfront.net/5557d5a11584d7201a38ee1a95200f57a4cc0f88/15085/assets/png/github-ico.png" alt="GitHub" />
+          <a 
+            className="bg-darkk" 
+            href="https://github.com/MatuqE" 
+            target="_blank" 
+            aria-label="GitHub Profile" 
+            rel="noopener noreferrer"
+          >
+            <FaGithub className="social-icon-git-footer social-icon-footer" />
           </a>
-          <a href="https://github.com/MatuqE" target='_blank'>
-            <img src="https://cdn.pixabay.com/photo/2020/08/25/02/16/facebook-5515461_1280.png" alt="Facebook" />
+          <a
+            className="bg-darkk"
+            href="https://wa.me/5493814016226" // Reemplaza con tu número
+            target="_blank"
+            aria-label="WhatsApp Contact"
+            rel="noopener noreferrer"
+          >
+            <FaWhatsapp className="social-icon-whatsapp-footer social-icon-footer" />
           </a>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Footer;

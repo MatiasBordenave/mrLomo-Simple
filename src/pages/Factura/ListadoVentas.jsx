@@ -50,48 +50,49 @@ export const ListadoVentas = () => {
   };
 
   return (
-    <>
-      <NavPrincipal />
-      <div className="row col-11 glass m-auto div_Factura">
-        <h3>Factura</h3>
-
-        {!detalleVenta ? (
-          <div className="container1">
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Fecha y Hora</th>
-                  <th>Número de Venta</th>
-                  <th>Importe total:</th>
-                  <th>Detalle</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ventas.map((venta) => (
-                  <tr key={venta.id}>
-                    <td>{venta.fechaYHora.slice(0, 10)}</td>
-                    <td>{venta.numeroVenta}</td>
-                    <td>{venta.importeTotal}</td>
-                    <td>
-                      <button onClick={() => mostrarDetalle(venta.id)}>
-                        Ver Detalle
-                      </button>
-                    </td>
+          <>
+        <NavPrincipal />
+        <div className="row col-11 glass m-auto div_Factura">
+          <div className="header-section">
+            <h3>Factura</h3>
+          </div>
+          {!detalleVenta ? (
+            <div className="table-responsive">
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Fecha y Hora</th>
+                    <th>Número de Venta</th>
+                    <th>Importe total</th>
+                    <th>Detalle</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
-        ) : (
-          <div>
-            <DetalleVenta detalleVenta={detalleVenta}/>
-  
-            <button onClick={handleVolverAtras}>Volver</button>
-          </div>
-        )}
-      </div>
-      <Footer />
-    </>
+                </thead>
+                <tbody>
+                  {ventas.map((venta) => (
+                    <tr key={venta.id}>
+                      <td>{venta.fechaYHora.slice(0, 10)}</td>
+                      <td>{venta.numeroVenta}</td>
+                      <td>{venta.importeTotal}</td>
+                      <td>
+                        <button onClick={() => mostrarDetalle(venta.id)}>
+                          Ver Detalle
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          ) : (
+            <div>
+              <DetalleVenta detalleVenta={detalleVenta} />
+              <button onClick={handleVolverAtras}>Volver</button>
+            </div>
+          )}
+        </div>
+        <Footer />
+      </>
+
   );
 };
 

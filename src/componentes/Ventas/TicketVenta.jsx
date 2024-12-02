@@ -28,8 +28,6 @@ export function TicketVenta({ detalleVenta, carrito }){
         window.print();
     }
 
-    console.log()
-
     useEffect(() => {
         // mostrarTickets();
         // mostrarUnTicket(props.dato);      

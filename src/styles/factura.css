@@ -88,3 +88,31 @@
     border: solid 1px rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(4px);
 }
+
+
+.header-section {
+  margin: 50px 0; /* Ajusta el espaciado superior e inferior */
+  text-align: center;
+}
+
+.table-responsive {
+  overflow-x: auto; /* Permite el scroll horizontal */
+  -webkit-overflow-scrolling: touch; /* Mejora el desplazamiento táctil */
+}
+
+table {
+  width: 100%;
+  min-width: 600px; /* Define un ancho mínimo para evitar columnas apretadas */
+}
+
+.div_Factura {
+  margin-top: 70px; /* Baja el componente desde el borde superior */
+  padding: 20px; /* Espaciado interno */
+  min-height: 35em;
+}
+
+@media (max-width: 768px) {
+  .div_Factura {
+    margin-top: 50px; /* Espaciado reducido en pantallas pequeñas */
+  }
+}

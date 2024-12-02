@@ -1,19 +1,16 @@
-/* Asegura que el footer esté en el fondo de la página */
-.footer {
+/* footer */
+ /* Asegura que el footer esté en el fondo de la página */
+ .footer {
   background-color: #000; /* Fondo negro */
   color: white; /* Texto blanco */
-  padding: 10px 0;
-  position: fixed; /* Fijamos el footer al fondo */
+  padding:  0;
   bottom: 0; /* Asegura que quede al fondo */
   left: 0;
   width: 100%;
   z-index: 1000; /* Para asegurarnos de que quede encima del contenido */
+  margin-top: 3em;
 }
 
-/* Añadir un padding inferior en el body para que el contenido no quede tapado por el footer */
-body {
-  padding-bottom: 60px; /* Ajusta el valor según el tamaño del footer */
-}
 
 /* Flexbox para distribuir los elementos dentro del footer */
 .footer .container {
@@ -53,4 +50,81 @@ body {
 
 .bg-darkk {
   background-color: #000;
+}
+
+/* animacion skills */
+@keyframes fadeInUpSkills {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Comienza más abajo */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* Llega a su posición original */
+  }
+}
+
+/* Sección Skills */
+
+
+/* Animación para la sección Skills */
+@keyframes fadeInUpSkills {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* iconos about */ 
+
+.about-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.social-icon {
+  font-size: 2.5rem;
+  color: #000000; /* Color para LinkedIn */
+  transition: transform 0.3s;
+}
+.social-icon-git {
+  font-size: 2.5rem;
+  color: #000000; /* Color para LinkedIn */
+  transition: transform 0.3s;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  color: #0077b5; /* Color de hover */
+}
+
+.social-icon-git:hover {
+  transform: scale(1.1);
+  color: #e4e4e4; /* Color de hover */
+}
+
+/* footer icons  */
+.social-icon-footer {
+  font-size: 2.5rem;
+  color: #ececec; /* Color para LinkedIn */
+  transition: transform 0.3s;
+}
+.social-icon-whatsapp-footer:hover{
+  transform: scale(1.1);
+  color: #0ab304; /* Color de hover */
+}
+
+.social-icons-fclk-footer:hover {
+  transform: scale(1.1);
+  color: #0077b5; /* Color de hover */
+}
+.social-icon-git-footer:hover {
+  transform: scale(1.1);
+  color: #6b6b6b; /* Color de hover */
 }

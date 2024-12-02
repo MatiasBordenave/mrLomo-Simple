@@ -184,7 +184,6 @@ export function Producto() {
 
   const mostrarUnProducto = () => {
 
-     console.log(idProducto)
     if (idProducto.length > 0) {
     
           setUnProducto(productos.filter(productos => productos.id === idProducto));
@@ -249,7 +248,7 @@ export function Producto() {
 
     <div className="divProductos">
       <NavPrincipal />
-      <div className="row m-auto col-12 main">
+      <div className="row m-auto main">
         <h2 className="glass2">Lista de Productos</h2>
 
 
@@ -260,63 +259,80 @@ export function Producto() {
               MostrarEditar ? (<div>
 
                 <h1>Editar Producto</h1>
-                <Table striped bordered hover variant="warning" className='md tabla'>
-                  <thead className=''>
-                    <tr className=''>
-                      <th>Codigo</th>
-                      <th>Nombre</th>
-                      <th>Descripcion</th>
-                      <th>Precio</th>
-                      <th>Stockeable</th>
-                      {
-                        stockeableEdit == "SI" &&
-                        <th>Stock</th>
-                      }
-
-                      <th>Guardar</th>
-                      <th>Cancelar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      
-                         (
-                          <tr>
-                            <td>{idProducto}</td>
-                            <td><input type="text" onChange={(e) => setNombre(e.target.value)} value={nombre} /></td>
-                            <td><input value={descripcion1} onChange={(e) => setDescripcion1(e.target.value)} type="text" /></td>
-                            <td><input type="number" value={precio} onChange={(e) => setPrecio(e.target.value)} /></td>
-                            <td>
-                              <select
-                                name=""
-                                id=""
-                                value={stockeableEdit} // Mantener el estado sincronizado
-                                onChange={(e) => {
-                                  setStockeableEdit(e.target.value);
-                                  setValidacionStockeable1(e.target.value === "SI" || e.target.value === "NO");
-                                }}
-                              >
-                                <option value="default">Seleccionar</option>
-                                <option value="SI">SI</option>
-                                <option value="NO">NO</option>
-                              </select>
-                            </td>
-
-                            {
-                              stockeableEdit == "SI" &&
-                              <td> <input onChange={(e) => setContador(e.target.value)} value={contador} type="number" /></td>
-                            }
-
-                            <td><button onClick={(() => { handleGuardarEditar() })}>Guardar</button>{' '}</td>
-                            <td><button onClick={(() => { handleCancelarEditar() })}>Cancelar</button>{' '}</td>
-
-
-                          </tr>)
-                      }
-                      
-                    
-                  </tbody>
-                </Table>
+                <div className="table-responsive"> {/* Contenedor de desplazamiento */}
+                  <Table striped bordered hover variant="warning" className="table">
+                    <thead>
+                      <tr>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                        <th>Stockeable</th>
+                        {stockeableEdit === "SI" && <th>Stock</th>}
+                        <th>Guardar</th>
+                        <th>Cancelar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{idProducto}</td>
+                        <td>
+                          <input
+                            type="text"
+                            onChange={(e) => setNombre(e.target.value)}
+                            value={nombre}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            value={descripcion1}
+                            onChange={(e) => setDescripcion1(e.target.value)}
+                            type="text"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            value={precio}
+                            onChange={(e) => setPrecio(e.target.value)}
+                          />
+                        </td>
+                        <td>
+                          <select
+                            name=""
+                            id=""
+                            value={stockeableEdit}
+                            onChange={(e) => {
+                              setStockeableEdit(e.target.value);
+                              setValidacionStockeable1(
+                                e.target.value === "SI" || e.target.value === "NO"
+                              );
+                            }}
+                          >
+                            <option value="default">Seleccionar</option>
+                            <option value="SI">SI</option>
+                            <option value="NO">NO</option>
+                          </select>
+                        </td>
+                        {stockeableEdit === "SI" && (
+                          <td>
+                            <input
+                              onChange={(e) => setContador(e.target.value)}
+                              value={contador}
+                              type="number"
+                            />
+                          </td>
+                        )}
+                        <td>
+                          <button onClick={handleGuardarEditar}>Guardar</button>{" "}
+                        </td>
+                        <td>
+                          <button onClick={handleCancelarEditar}>Cancelar</button>{" "}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </div>
               </div>
               ) 
               : 
@@ -329,68 +345,63 @@ export function Producto() {
 
               (
                 <div className="divLados">
-                  <h3>Productos</h3>
+  <h3>Productos</h3>
 
-                  <Table striped bordered hover variant="warning" className='tabla'>
-                    <thead className=''>
-                      <tr className=''>
+  <div className="table-responsive-wrapper">
+    <Table striped bordered hover variant="warning" className="table">
+      <thead>
+        <tr>
+          <th>Codigo</th>
+          <th>Nombre</th>
+          <th>Descripcion</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        {productos.map((producto) => (
+          <tr key={producto.id}>
+            <td>{producto.id}</td>
+            <td>{producto.nombre}</td>
+            <td>{producto.descripcion}</td>
+            <td>{producto.precio}</td>
+            <td>{producto.stock}</td>
+            <td>
+              <button
+                onClick={() => {
+                  setMostrarEditar(true);
+                  setProductoActual(false);
+                  setIdProducto(producto.id);
+                  setCodigoProd(producto.codProducto);
+                  setContador(producto.stock);
+                  setDescripcion1(producto.descripcion);
+                  setNombre(producto.nombre);
+                  setSelect(producto.codProducto);
+                  setPrecio(producto.precio);
+                  mostrarUnProducto(producto.codProducto);
+                }}
+              >
+                Editar
+              </button>
+            </td>
+            <td>
+              <button onClick={() => deleteProducto(producto.id)}>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  </div>
 
+  <div className="btnEnd">
+    <button onClick={onClickNuevo}>Nuevo</button>
+  </div>
+</div>
 
-                        <th>Codigo</th>
-                        <th>Nombre</th>
-                        <th>Descripcion</th>
-                        <th>Precio</th>
-                        <th>Stock</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        productos.map((producto) => {
-                          return (
-                            <tr
-                              className='' key={producto.id} >
-
-                              <td >{producto.id}</td>
-                              <td>{producto.nombre}</td>
-                              <td>{producto.descripcion}</td>
-                              <td>{producto.precio}</td>
-                              <td>{producto.stock}</td>
-
-
-
-
-                              <td><button onClick={(() => {
-                                setMostrarEditar(true)
-                                setProductoActual(false)
-                                setIdProducto(producto.id)
-                                setCodigoProd(producto.codProducto)
-                                setContador(producto.stock)
-                                setDescripcion1(producto.descripcion)
-                                setNombre(producto.nombre)
-                                setSelect(producto.codProducto)
-                                setPrecio(producto.precio)
-                                mostrarUnProducto(producto.codProducto)
-
-                              })}>Editar</button>{' '}</td>
-
-
-
-
-                              <td><button onClick={(() => { deleteProducto(producto.id) }
-                              )}>Eliminar</button>{' '}</td>
-                            </tr>)
-                        })
-                      }
-                    </tbody>
-                  </Table>
-
-
-                  <div className="btnEnd">
-                    <button onClick={onClickNuevo}>Nuevo</button>
-                  </div>
-                </div>
               ) 
               
               : 

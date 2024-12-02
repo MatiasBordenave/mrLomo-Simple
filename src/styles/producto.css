@@ -21,12 +21,15 @@ body{
   backdrop-filter: blur(1px);
 }
 .productos{
-    min-height: 23em;
+    min-height: 30em;
     height: 100%;
 }
 .divNavCategoria{
     min-height: 23em;
     height: 100%;
+}
+.main{
+    min-height: 50em;
 }
 
 .glass2{
@@ -161,3 +164,15 @@ button{
     justify-content: end;
     margin-right: 25px;
 }
+
+/* Contenedor para hacer la tabla responsive */
+.table-responsive-wrapper {
+    overflow-x: auto; /* Permite el desplazamiento horizontal */
+    -webkit-overflow-scrolling: touch; /* Mejora la experiencia en dispositivos táctiles */
+  }
+  
+  .table {
+    width: 100%; /* Asegura que la tabla use todo el ancho disponible */
+    min-width: 800px; /* Opcional: define un ancho mínimo para evitar que las columnas se vean demasiado comprimidas */
+  }
+

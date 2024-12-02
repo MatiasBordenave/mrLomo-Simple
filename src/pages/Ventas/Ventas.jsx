@@ -138,20 +138,30 @@ export function Ventas() {
     }
 
 
-
     const handleQuitar = (id) => {
-         
-            setCarrito(prevCarrito => prevCarrito.filter(producto => producto.id !== id));
-        
-        
-    }
+        setCarrito((prevCarrito) => {
+            // Encontrar el producto que se va a eliminar
+            const productoEliminado = prevCarrito.find(producto => producto.id === id);
+    
+            if (productoEliminado) {
+                // Calcular el monto a restar: precio * cantidad
+                const montoARestar = productoEliminado.precio * productoEliminado.cantidad;
+    
+                // Actualizar el total restando el monto calculado
+                setTotal((prevTotal) => prevTotal - montoARestar);
+            }
+    
+            // Retornar el nuevo carrito sin el producto eliminado
+            return prevCarrito.filter(producto => producto.id !== id);
+        });
+    };
+    
 
     const handleCancelar = () => {
 
         if (carrito.length > 0) {
 
                     setCarrito([])
-                    getProductoPorVenta()
                     setTotal(0)
                     resetItems()
 
@@ -237,7 +247,6 @@ export function Ventas() {
             // Usar el estado previo para actualizar el carrito
             setCarrito(prevCarrito => {
                 const nuevoCarrito = [...prevCarrito, productoNuevo];
-                console.log('Nuevo carrito: ', nuevoCarrito);
                 return nuevoCarrito;
             });
     
@@ -253,7 +262,6 @@ export function Ventas() {
         }
     };
     
-    console.log(carrito)
 
     const resetItems = () => {
         setTipoEntrega("")
