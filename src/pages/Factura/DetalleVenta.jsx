@@ -13,42 +13,43 @@ export const DetalleVenta = ({ detalleVenta }) => {
 
   return (
     <div className="container1">
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Nro Factura:</th>
-            <th>Nombre Producto:</th>
-            <th>Cantidad:</th>
-            <th>Precio Unitario:</th>
-            <th>Subtotal:</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {detalleVenta?.productos.map((producto, index) => (
-            <tr key={index}>
-              <td>{detalleVenta.numeroVenta}</td>
-              <td>{producto.nombre}</td>
-              <td>{producto.cantidad}</td>
-              <td>${producto.precio}</td>
-              <td>${producto.cantidad * producto.precio}</td>
+      <div className="table-responsive">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Nro Factura:</th>
+              <th>Nombre Producto:</th>
+              <th>Cantidad:</th>
+              <th>Precio Unitario:</th>
+              <th>Subtotal:</th>
             </tr>
-          ))}
-        </tbody>
+          </thead>
 
-        {/* Agregar un pie de tabla para el total */}
-        <tfoot>
-          <tr>
-            <td colSpan="4" style={{ textAlign: "right", fontWeight: "bold" }}>
-              Total:
-            </td>
-            <td style={{ fontWeight: "bold" }}>${totalVenta}</td>
-          </tr>
-        </tfoot>
-      </Table>
+          <tbody>
+            {detalleVenta?.productos.map((producto, index) => (
+              <tr key={index}>
+                <td>{detalleVenta.numeroVenta}</td>
+                <td>{producto.nombre}</td>
+                <td>{producto.cantidad}</td>
+                <td>${producto.precio}</td>
+                <td>${producto.cantidad * producto.precio}</td>
+              </tr>
+            ))}
+          </tbody>
+
+          {/* Agregar un pie de tabla para el total */}
+          <tfoot>
+            <tr>
+              <td colSpan="4" style={{ textAlign: "right", fontWeight: "bold" }}>
+                Total:
+              </td>
+              <td style={{ fontWeight: "bold" }}>${totalVenta}</td>
+            </tr>
+          </tfoot>
+        </Table>
+      </div>
     </div>
   );
 };
 
 export default DetalleVenta;
-

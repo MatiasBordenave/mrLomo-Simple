@@ -116,3 +116,31 @@ table {
     margin-top: 50px; /* Espaciado reducido en pantallas pequeñas */
   }
 }
+
+
+.table-responsive {
+  overflow-x: auto; /* Habilitar scroll horizontal */
+}
+
+table {
+  width: 100%; /* Asegurar que la tabla ocupe todo el contenedor */
+}
+
+th,
+td {
+  white-space: nowrap; /* Evitar que el contenido se rompa en varias líneas */
+}
+
+
+.table-responsive {
+  overflow-x: auto; /* Habilitar scroll horizontal */
+}
+
+table {
+  width: 100%; /* Asegurar que la tabla ocupe todo el contenedor */
+}
+
+th,
+td {
+  white-space: nowrap; /* Evitar que el contenido se rompa en varias líneas */
+}
