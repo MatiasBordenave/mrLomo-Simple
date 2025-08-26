@@ -49,3 +49,7 @@ Metodologías: SCRUM
 
 ⚠️ Esta aplicación es una demo y no representa un sistema final de producción.
 
+<h4>Sitio Web 💻</h4>
+
+<a href="https://mr-lomo-simple.netlify.app/" terget="_blank">Miralo Haciendo Click Aqui!</a>
+
